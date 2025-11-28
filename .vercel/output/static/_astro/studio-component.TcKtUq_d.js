@@ -1,1 +1,0 @@
-import{af as a}from"./studio-component.C8v9fSbI.js";import"./jsx-runtime.D_zvdyIk.js";import"./index.CoQRvKGO.js";import"./image-url.umd.CmM9KNG9.js";import"./client.Bldzs7uH.js";export{a as StudioComponent};
