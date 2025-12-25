@@ -1,9 +1,8 @@
 ---
-import BlogCard from '../../components/BlogCard.astro';
+import BlogList from '../../components/BlogList';
 import Layout from '../../layout/index.astro';
 import { loadQuery } from '../../sanity/lib/load-query';
 import type { Post } from '../../sanity/lib/types';
-import { urlForImage } from '../../sanity/lib/url-for-image';
 
 const { data: posts } = await loadQuery<Post[]>({
     query: `*[_type == "post"][0..3] | order(_createdAt asc){
@@ -15,37 +14,12 @@ const { data: posts } = await loadQuery<Post[]>({
       publishedAt,
     }`,
   });
----
 
+---
 
 <Layout
   title='Icone - Our Blog'
   description='Insights and perspectives on design, development, and digital innovation'
 >
-    {/* Hero Section */}
-    <section class="relative py-20 bg-black text-white">
-      <div class="container mx-auto px-4">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Blog_</h1>
-        <p class="text-lg text-gray-300 max-w-2xl">
-          Insights and perspectives on design, development, and digital innovation
-        </p>
-      </div>
-  </section>
-
-    {/* Blog Grid */}
-    <section class="pt-16 pb-44">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((blog) => (
-            <BlogCard  
-            id={blog.slug.current} 
-                imageUrl={urlForImage(blog.mainImage.asset).width(800).format('webp').url()}
-                title={blog.title}
-                category={blog.categories[0]?.title || 'General'}
-                date={blog.publishedAt}
-                excerpt={blog.overview} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <BlogList client:load/>
   </Layout>
