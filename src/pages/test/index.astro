@@ -1,27 +1,178 @@
 ---
-import About from "../../components/About.astro";
-import FAQ from "../../components/FAQ";
-import Footer from "../../components/Footer.astro";
-import Hero1 from "../../components/Hero1.astro";
-import Navbar from "../../components/Navbar";
-import Portfolio from "../../components/Portfolio";
-import Services from "../../components/Services.astro";
-import Testimonials from "../../components/Testimonials.astro";
-import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import Hero2 from '../../components/Hero2.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import StatCard from '../../components/StatCard.astro';
+import Button, { buttonVariants } from '../../components/ui/Button.astro';
+import Layout from '../../layout/index.astro';
+import { loadQuery } from '../../sanity/lib/load-query';
+import type { Post, Project } from '../../sanity/lib/types';
+import { urlForImage } from '../../sanity/lib/url-for-image';
+
+const { data: projects } = await loadQuery<Project[]>({
+    query: `*[_type == "project"] | order(_createdAt asc){
+      name,
+      slug,
+      logo,
+      mainImage,
+      overview,
+      tags[],
+      status,
+      publishedAt,
+    }`,
+  });
+
+  const { data: posts } = await loadQuery<Post[]>({
+    query: `*[_type == "post"][0..3] | order(_createdAt asc){
+      title,
+      slug,
+      mainImage,
+      overview,
+      categories[]->{ title},
+      publishedAt,
+    }`,
+  });
+
 ---
 
-<Layout title="Test Page" description="This is a test page.">
- <div class="min-h-screen bg-brand-dark text-brand-cream font-sans selection:bg-brand-yellow selection:text-brand-dark scroll-smooth">
-      <Navbar />
-      <main>
-        <Hero1 />
-        <About />
-        <Services />
-        <Portfolio />
-        <Testimonials />
-        <FAQ client:load/>
-      </main>
-      <Footer />
-    </div>
+<Layout
+title="Icone - Innovative Digital Solutions for Businesses"
+description='Icone is a startup that creates innovative digital solutions for businesses.'
+>
+	<div class="min-h-screen">
+		<Hero2/>
+    <section class="pb-20  bg-white" id="insights">
+      <div class="container mx-auto px-4">
+        <SectionTitle>Insights_</SectionTitle>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <StatCard label="Taux de satisfaction" value="99%" />
+          <StatCard label="Projets" value="5+" />
+          <StatCard label="Clients satisfaits" value="250+" />
+          <StatCard label="Taux de rétention" value="67%" />
+        </div>
+      </div>
+    </section>
 
-  </Layout>
+    <section class="pt-16 pb-28 bg-gray-50" id="projects">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-10">
+          <SectionTitle className="mb-0">_Featured Projects</SectionTitle>
+          <Button variant="outline">View All</Button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {projects.map((project) => (
+            <ProjectCard 
+              id={project.slug.current} 
+              image={urlForImage(project.mainImage.asset).width(800).format('webp').url()}
+              title={project.name}
+              categories={project.tags}
+              description={project.overview}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative py-24 flex flex-col justify-center" style={{
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
+      <div class="container mx-auto px-4 z-10">
+        <div class="max-w-2xl">
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">
+            Nous croyons en une conception avant-gardiste_
+          </h2>
+          <p class="text-white mb-10 opacity-90 text-lg">
+            Des solutions innovantes pour tous les défis auxquels vous êtes confrontés
+          </p>
+          <!-- <Button className="mt-6">Learn More</Button> -->
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gray-100" id="innovation">
+      <div class="container mx-auto px-4">
+        <SectionTitle>Meilleures Innovations_</SectionTitle>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div>
+            <h3 class="font-semibold mb-2">Technologie digitale créative</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Grâce à nos solutions de conception avancées, nous permettons aux entreprises d’atteindre de nouveaux sommets et de réussir.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Stratégie de croissance durable</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Grâce à nos stratégies efficaces, les organisations évoluent pour créer des résultats plus innovants.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Augmentation des revenus des entreprises</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              En mettant en œuvre ce dont les clients ont besoin, nous leur offrons dès maintenant de grandes opportunités.
+            </p>
+          </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-lg overflow-hidden relative">
+          <div class="md:w-1/2">
+            <h3 class="text-sm opacity-70 mb-3">Ce que signifie travailler avec nous</h3>
+            <p class="text-lg font-medium mb-6">
+             Nous ne créons pas que des visuels. Nous créons des émotions et des expériences qui dureront des années.
+            </p>
+            <p class="text-2xl md:text-3xl font-bold mb-8">
+             Des solutions innovantes pour tous les défis auxquels vous êtes confrontés
+            </p>
+            <Button>Learn More</Button>
+          </div>
+          <div class="absolute right-0 bottom-0 hidden md:block">
+            <img 
+              src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+              alt="Team collaboration" 
+              class="max-w-xs"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  
+      <!-- <Stats />
+      <Projects />
+      <Services />
+      <Team />
+      <Testimonials />
+      <Footer /> -->
+      <section class="pt-16 mb-20 bg-gray-50" id="blog">
+        <div class="container mx-auto px-4">
+          <div class="flex justify-between items-center mb-10">
+            <SectionTitle className="mb-0">_Latest Posts</SectionTitle>
+            <a href="/blog" class={buttonVariants({ variant: 'outline' })}>View All</a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((blog) => (
+              <BlogCard 
+                id={blog.slug.current} 
+                imageUrl={urlForImage(blog.mainImage.asset).width(800).format('webp').url()}
+                title={blog.title}
+                category={blog.categories[0]?.title || 'General'}
+                date={blog.publishedAt}
+                excerpt={blog.overview}
+              />
+            ))}
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="py-16 bg-black text-white text-center">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">Book free Consulting</h2>
+          <Button variant='outline' className="bg-white text-black hover:bg-gray-100">Get In Touch</Button>
+        </div>
+      </section>
+    </div>
+</Layout>

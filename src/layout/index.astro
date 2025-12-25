@@ -1,8 +1,8 @@
 ---
 import { Font } from 'astro:assets';
 import BaseHead from './BaseHead.astro';
-import Footer from "./Footer.astro";
-import Navbar2 from './Navbar2';
+import Footer from './Footer.astro';
+import Navbar from './Navbar';
 
 type Props = { title: string; description: string, image?: string };
 
@@ -19,9 +19,13 @@ const { title, description, image } = Astro.props
 	</head>
 	<body class="scroll-smooth">
 		<div class="min-h-screen font-sans scroll-smooth">
-			<!-- <Navbar2 client:load/> -->
-			<slot />
-			<!-- <Footer /> -->
+			 <div class="min-h-screen bg-brand-dark text-brand-cream font-sans selection:bg-brand-yellow selection:text-brand-dark scroll-smooth">
+      <Navbar />
+      <main>
+       <slot />
+      </main>
+      <Footer />
+    </div>
 		</div>
 	</body>
 </html>
