@@ -1,76 +1,230 @@
 import React, { useEffect, useState } from "react";
 
 const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "About Us", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Portfolio", href: "#portfolio" },
-  { name: "Contact", href: "#footer" },
+  { name: "Home", href: "/#home" },
+  { name: "About Us", href: "/#about" },
+  { name: "foundation", href: "/#foundation" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Blog", href: "/blog" },
 ];
 // ${scrolled ? "bottom-8 md:top-8 md:bottom-auto" : "top-8"}
 const Navbar: React.FC = () => {
   const [active, setActive] = useState("Home");
-  const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+
+      // Control background style
+      setIsScrolled(currentScrollY > 50);
+
+      // Don't hide navbar if menu is open
+      if (isMenuOpen) {
+        setIsVisible(true);
+        return;
+      }
+
+      // Control show/hide logic
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide
+        setIsVisible(false);
+      } else {
+        // Scrolling up - show
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY, isMenuOpen]);
+
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMenuOpen]);
+
+  const handleNavItemClick = (item: (typeof navItems)[0]) => {
+    setActive(item.name);
+    setIsMenuOpen(false);
+
+    if (item.name === "Home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (item.name === "Blog") {
+    } else if (item.name === "Portfolio") {
+      const el = document.querySelector(item.href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      } else {
+      }
+    } else {
+      const el = document.querySelector(item.href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      } else {
+        setTimeout(() => {
+          document
+            .querySelector(item.href)
+            ?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  };
 
   return (
-    <div
-      className={`fixed z-50 left-0 right-0 flex justify-center transition-all duration-300 top-[unset] md:top-8 bottom-8 md:bottom-[unset]`}
-    >
-      <nav className="bg-brand-cream/90 backdrop-blur-md text-brand-dark px-2 py-2 rounded-full shadow-xl border border-white/20 flex items-center gap-1">
-        {/* Mobile Icon Button (Hidden on Desktop) */}
-        <div className="md:hidden bg-brand-yellow p-3 rounded-full mr-1 cursor-pointer">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <>
+      <header
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 transform ${
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${
+          isScrolled || isMenuOpen
+            ? "bg-brand-dark/80 backdrop-blur-lg border-b border-white/10 py-4"
+            : "bg-transparent py-6"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+          {/* Brand Logo */}
+          <div className="text-2xl font-bold font-display tracking-wider text-brand-cream uppercase cursor-pointer hover:text-brand-yellow transition-colors duration-300">
+            Icone Tech.
+          </div>
+
+          {/* Desktop Links */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavItemClick(item);
+                }}
+                className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:text-brand-yellow ${
+                  active === item.name
+                    ? "text-brand-yellow"
+                    : "text-brand-cream"
+                }`}
+              >
+                {item.name}
+              </a>
+            ))}
+            <a
+              href="/#footer"
+              className="bg-brand-yellow text-brand-dark px-6 py-2 rounded-full font-bold uppercase text-xs hover:scale-105 transition-transform duration-300"
+            >
+              Contact
+            </a>
+          </nav>
+
+          {/* Mobile Menu Button - Also acts as Close Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden flex items-center gap-2 group z-[110]"
+            aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-cream/60 group-hover:text-brand-yellow transition-colors">
+              {isMenuOpen ? "Close" : "Menu"}
+            </span>
+            <div className="flex flex-col gap-1.5 focus:outline-none">
+              <span
+                className={`w-6 h-0.5 bg-brand-cream transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+              ></span>
+              <span
+                className={`w-6 h-0.5 bg-brand-cream transition-all duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"}`}
+              ></span>
+              <span
+                className={`w-6 h-0.5 bg-brand-cream transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              ></span>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      {/* Full-screen Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-[105] bg-brand-dark transition-all duration-500 flex flex-col justify-center items-center ${
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto translate-x-0"
+            : "opacity-0 pointer-events-none translate-x-full"
+        }`}
+      >
+        {/* Extra redundancy: Explicit close button for users who miss the header toggle */}
+        <div className="absolute top-8 right-6 md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-brand-cream hover:bg-brand-yellow hover:text-brand-dark transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
               strokeWidth={2}
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
 
-        {navItems.map((item) => (
-          <a
-            key={item.name}
-            href={item.href}
-            onClick={(e) => {
-              e.preventDefault();
-              setActive(item.name);
-              const el = document.querySelector(item.href);
-              el?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className={`
-              hidden md:block px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wide transition-all duration-300
-              ${
-                active === item.name
-                  ? "bg-brand-yellow text-brand-dark shadow-md transform scale-105"
-                  : "hover:bg-gray-200 text-gray-800"
-              }
-            `}
-          >
-            {item.name}
-          </a>
-        ))}
+        <div className="flex flex-col gap-8 text-center">
+          {navItems.map((item, idx) => (
+            <button
+              key={item.name}
+              onClick={() => handleNavItemClick(item)}
+              className="group flex flex-col items-center"
+            >
+              <span className="text-brand-yellow text-[10px] font-bold uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                0{idx + 1}
+              </span>
+              <span className="text-5xl font-display uppercase text-brand-cream hover:text-brand-yellow transition-colors">
+                {item.name}
+              </span>
+            </button>
+          ))}
+        </div>
 
-        {/* Simple mobile view fallback for active item */}
-        <a href="#home" className="md:hidden px-4 font-bold uppercase text-sm">
-          {active}
-        </a>
-      </nav>
-    </div>
+        {/* Footer info in mobile menu */}
+        <div className="absolute bottom-12 left-0 w-full px-12 flex justify-between items-end">
+          <div className="text-left">
+            <div className="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-1">
+              Follow Us
+            </div>
+            <div className="flex gap-4">
+              <span className="text-xs uppercase font-bold text-brand-cream/60">
+                Ig
+              </span>
+              <span className="text-xs uppercase font-bold text-brand-cream/60">
+                Tw
+              </span>
+              <span className="text-xs uppercase font-bold text-brand-cream/60">
+                Li
+              </span>
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-1">
+              Inquiry
+            </div>
+            <div className="text-xs font-bold uppercase text-brand-cream/80">
+              hello@brightcove.com
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

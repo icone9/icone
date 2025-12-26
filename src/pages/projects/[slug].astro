@@ -1,151 +1,324 @@
 ---
-import { Image } from 'astro:assets';
-import Gallery from '../../components/gallery';
-import SectionTitle from '../../components/SectionTitle.astro';
-import Card from '../../components/ui/Card.astro';
-import CardContent from '../../components/ui/CardContent.astro';
-import CardHeader from '../../components/ui/CardHeader.astro';
+import { ArrowUpRight } from '../../components/icons';
 import Layout from '../../layout/index.astro';
-import { loadQuery } from '../../sanity/lib/load-query';
-import type { Project } from '../../sanity/lib/types';
-import { urlForImage } from '../../sanity/lib/url-for-image';
 
+
+// export async function getStaticPaths() {
+//   const { data: projects} = await loadQuery<Project[]>({
+//     query: `*[_type == "project"]{
+//       name,
+//       slug,
+//       logo,
+//       websiteUrl,
+//       mainImage,
+//       overview,
+//       tags[],
+//       solutions,
+//       challenges,
+//       technologies[],
+//       features[],
+//       gallery[],
+//       results[],
+//       status,
+//       publishedAt,
+//     }`,
+//   });
+//   return projects.map((project) => ({
+//     params: { slug: project.slug.current },
+//     props: { project } 
+//   }));
+// }
 
 export async function getStaticPaths() {
-  const { data: projects} = await loadQuery<Project[]>({
-    query: `*[_type == "project"]{
-      name,
-      slug,
-      logo,
-      websiteUrl,
-      mainImage,
-      overview,
-      tags[],
-      solutions,
-      challenges,
-      technologies[],
-      features[],
-      gallery[],
-      results[],
-      status,
-      publishedAt,
-    }`,
-  });
-  return projects.map((project) => ({
-    params: { slug: project.slug.current },
+const projects = [
+   {
+    id: "puffilo",
+    title: "Puffilo : Bites of Cloud-Like Bliss",
+    subtitle: "Reimagining Confectionery",
+    description:
+      'Puffilo needed a visual language that spoke to the "cloud-like" texture of their products. We developed a soft-touch packaging system and a pastel-driven color palette.',
+    client: "Puffilo Sweets",
+    industry: "Food & Beverage",
+    year: "2025",
+    services: ["Visual Identity", "Packaging"],
+    heroImage:
+      "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&q=80&w=2000",
+    thumbnail: "https://picsum.photos/seed/puffilo/800/600",
+    features: [
+      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+    ],
+    gallery: [
+      'https://picsum.photos/seed/p1/800/600',
+      'https://picsum.photos/seed/p2/800/1000',
+      'https://picsum.photos/seed/p3/800/800',
+      'https://picsum.photos/seed/p4/800/500'
+    ]
+  },
+  {
+    id: "haven",
+    title: "Haven: Unleash Your Best Self!",
+    subtitle: "Digital Fitness Revolution",
+    description:
+      "Haven is more than a workout app; it is a mental health and physical fitness sanctuary. We created a UI that feels calming yet motivating.",
+    client: "Haven Labs",
+    industry: "Health & Tech",
+    year: "2024",
+    services: ["UI/UX Design", "Branding"],
+    heroImage:
+      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000",
+    thumbnail: "https://picsum.photos/seed/fitness/800/600",
+    features: [
+      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+    ],
+   gallery: [
+      'https://picsum.photos/seed/p1/800/600',
+      'https://picsum.photos/seed/p2/800/1000',
+      'https://picsum.photos/seed/p3/800/800',
+      'https://picsum.photos/seed/p4/800/500'
+    ]
+  },
+  {
+    id: "hoptonic",
+    title: "Hoptonic Tea : Natural Energy",
+    subtitle: "Refreshment Redefined",
+    description:
+      "A modern take on traditional tea culture, bringing vibrant energy to the beverage market.",
+    client: "Hoptonic Co.",
+    industry: "Beverage",
+    year: "2024",
+    services: ["Web Design", "Strategy"],
+    heroImage: "https://picsum.photos/seed/tea/1200/800",
+    thumbnail: "https://picsum.photos/seed/tea/800/600",
+    features: [
+      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+    ],
+  gallery: [
+      'https://picsum.photos/seed/p1/800/600',
+      'https://picsum.photos/seed/p2/800/1000',
+      'https://picsum.photos/seed/p3/800/800',
+      'https://picsum.photos/seed/p4/800/500'
+    ]
+  },
+  {
+    id: "caca-family",
+    title: "Caca Family : Roots of Love",
+    subtitle: "Community First Branding",
+    description:
+      "Building a brand for a non-profit organization focused on family support and community growth.",
+    client: "Caca Foundation",
+    industry: "Non-Profit",
+    year: "2024",
+    services: ["Web Design", "Branding"],
+    heroImage: "https://picsum.photos/seed/family/1200/800",
+    thumbnail: "https://picsum.photos/seed/family/800/600",
+    features: [
+      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+    ],
+    gallery: [
+      'https://picsum.photos/seed/p1/800/600',
+      'https://picsum.photos/seed/p2/800/1000',
+      'https://picsum.photos/seed/p3/800/800',
+      'https://picsum.photos/seed/p4/800/500'
+    ]
+  },
+  {
+    id: "edify",
+    title: "Edify : Knowledge for All",
+    subtitle: "Educational Platform",
+    description:
+      "Streamlining the online learning experience through intuitive design and clear architecture.",
+    client: "Edify Tech",
+    industry: "Education",
+    year: "2024",
+    services: ["Branding", "UI/UX Design"],
+    heroImage: "https://picsum.photos/seed/tech/1200/800",
+    thumbnail: "https://picsum.photos/seed/tech/800/600",
+   features: [
+      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+    ],
+   gallery: [
+      'https://picsum.photos/seed/p1/800/600',
+      'https://picsum.photos/seed/p2/800/1000',
+      'https://picsum.photos/seed/p3/800/800',
+      'https://picsum.photos/seed/p4/800/500'
+    ]
+  },
+  {
+    id: "lumina",
+    title: "Lumina : Radiant Living",
+    subtitle: "Luxury Real Estate",
+    description:
+      "Capturing the essence of high-end architectural design through cinematic photography and elite web presence.",
+    client: "Lumina Estates",
+    industry: "Real Estate",
+    year: "2023",
+    services: ["Visual Identity", "Web Design"],
+    heroImage: "https://picsum.photos/seed/house/1200/800",
+    thumbnail: "https://picsum.photos/seed/house/800/600",
+    features: [
+      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+    ],
+    gallery: [
+      'https://picsum.photos/seed/p1/800/600',
+      'https://picsum.photos/seed/p2/800/1000',
+      'https://picsum.photos/seed/p3/800/800',
+      'https://picsum.photos/seed/p4/800/500'
+    ]
+  },
+]
+
+return projects.map((project) => ({
+    params: { slug: project.id },
     props: { project } 
   }));
 }
+
 
 const { project } = Astro.props;
 ---
 
 <Layout
-  title={project.name}
-  description={project.overview}>
-<div class="min-h-screen ">
-    <div class="container mx-auto px-4 pb-16 space-y-16">
-
-      <div class=" grid grid-cols-1 md:grid-cols-8 gap-6 md:gap-8 overflow-hidden">
-        <div class="col-span-full md:col-span-5 relative h-56 md:h-96">
-          <Image
-            src={urlForImage(project.mainImage).format('webp').fit('fill').url()} 
-            alt={project.name} 
-            height={220}
-            width={1120}
-            class="w-full h-full object-cover rounded-2xl"
-          />
+  title={project.title + " - Icone Studio"}
+  description={project.subtitle + " | " + project.description}>
+<div class="bg-brand-dark min-h-screen text-brand-cream">
+      {/* Hero Section */}
+      <section class="relative h-[70vh] md:h-[85vh] w-full overflow-hidden">
+        <img 
+          src={project.heroImage} 
+          alt={project.title} 
+          class="w-full h-full object-cover opacity-60"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 w-full p-4 md:p-12 max-w-7xl mx-auto left-1/2 -translate-x-1/2">
+          <a
+          href="/projects"
+            class="group flex items-center gap-2 text-brand-yellow font-bold uppercase text-xs mb-8 hover:text-white transition-colors"
+          >
+            <span class="rotate-180"><ArrowUpRight className="w-4 h-4" /></span>
+            Back to Projects
+        </a>
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <h1 class="text-6xl md:text-7xl font-display uppercase leading-[0.85] max-w-4xl">
+              {project.title.split(':').map((part, i) => (
+                <span class={i === 1 ? "text-brand-yellow block" : "block"}>
+                  {part}
+                </span>
+              ))}
+            </h1>
+          </div>
         </div>
-        <div class="col-span-full flex justify-center md:col-span-3">
-            <div class="flex flex-col items-start justify-center space-y-4 md:space-y-6">
-              <h1 class="text-4xl md:text-6xl font-bold">{project.name}</h1>
-              <p class="text-sm md:text-base mx-auto text-neutral-600">{project.overview}</p>
-  
-              <a href={project.websiteUrl} target="_blank" rel='noopener' class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium w-full rounded-lg border border-transparent bg-[#c4ff00] text-black focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none" >
-                <span>Visit website</span>
-                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              </a>
+      </section>
+
+      {/* Project Meta Grid */}
+      <section class="py-12 px-4 md:px-12 max-w-7xl mx-auto border-b border-white/10">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
+            <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Client</span>
+            <span class="text-xl font-display uppercase">{project.client}</span>
+          </div>
+          <div>
+            <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Industry</span>
+            <span class="text-xl font-display uppercase">{project.industry}</span>
+          </div>
+          <div>
+            <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Year</span>
+            <span class="text-xl font-display uppercase">{project.year}</span>
+          </div>
+          <div>
+            <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Services</span>
+            <div class="flex flex-wrap gap-2 mt-1">
+              {project.services.map(s => (
+                <span class="bg-white/10 px-2 py-0.5 rounded text-[10px] uppercase font-bold">{s}</span>
+              ))}
             </div>
+          </div>
         </div>
-  
-      </div>
-    
-      {/* Project Overview */}
-      <!-- <section>
-        <SectionTitle>Project Overview</SectionTitle>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card>
-            <CardHeader className="text-lg font-semibold">Client</CardHeader>
-            <CardContent>{project.client}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="text-lg font-semibold">Duration</CardHeader>
-            <CardContent>{project.duration}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="text-lg font-semibold">Year</CardHeader>
-            <CardContent>{project.year}</CardContent>
-          </Card>
+      </section>
+
+      {/* About & Story */}
+      <section class="py-20 px-4 md:px-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5">
+          <h2 class="text-4xl md:text-6xl font-display uppercase leading-none mb-6">
+            The <span class="text-brand-yellow">Challenge</span>
+          </h2>
+          <p class="text-gray-400 text-lg leading-relaxed">
+            Every project has a unique set of obstacles. For {project.client}, our primary objective was to redefine their market presence by bridging the gap between traditional reliability and modern, digital-first aesthetics.
+          </p>
         </div>
-      </section> -->
+        <div class="lg:col-span-7">
+          <div class="bg-brand-green/30 p-8 md:p-12 rounded-[2rem] border border-white/5 backdrop-blur-sm">
+            <h3 class="text-2xl font-display uppercase mb-4 text-white">Our Approach</h3>
+            <p class="text-gray-300 leading-relaxed">
+              {project.description}
+            </p>
+          </div>
+        </div>
+      </section>
 
-      
+      {/* Features Grid */}
+      <section class="py-20 bg-brand-cream text-brand-dark rounded-[3rem]">
+        <div class="max-w-7xl mx-auto px-4 md:px-12">
+          <h2 class="text-5xl md:text-7xl font-display uppercase text-center mb-16">
+            Key <span class="text-brand-green">Features</span>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {project.features.map((feature, i) => (
+              <div  class="bg-white p-8 rounded-3xl shadow-sm border border-black/5 hover:shadow-xl transition-shadow duration-300">
+                <div class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center mb-6 font-display text-2xl">
+                  0{i + 1}
+                </div>
+                <h4 class="text-2xl font-display uppercase mb-3">{feature.title}</h4>
+                <p class="text-gray-600 leading-relaxed text-sm">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Technologies Used */}
-      <section >
-        <SectionTitle>Technologies</SectionTitle>
-        <div class="flex flex-wrap gap-3">
-          {project.technologies?.map((tech, index) => (
-            <span 
-              class="px-4 py-2 bg-black text-white rounded-full text-sm"
-            >
-              {tech}
-            </span>
+      {/* Gallery Section */}
+      <section class="py-20 px-4 md:px-12 max-w-7xl mx-auto">
+        <h2 class="text-5xl md:text-7xl font-display uppercase mb-16">
+          Visual <span class="text-brand-yellow">Gallery</span>
+        </h2>
+        <div class="columns-1 md:columns-2 gap-8 space-y-8">
+          {project.gallery.map((img, i) => (
+            <div class="relative group overflow-hidden rounded-[2rem] border border-white/10">
+              <img 
+                src={img} 
+                alt={`Gallery ${i}`} 
+                class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105" 
+              />
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Challenge & Solution */}
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <Card>
-          <CardHeader className="text-xl font-bold">The Challenge</CardHeader>
-          <CardContent>{project.challenges}</CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="text-xl font-bold">Our Solution</CardHeader>
-          <CardContent>{project.solutions}</CardContent>
-        </Card>
+      {/* Footer CTA */}
+      <section class="py-20 text-center border-t border-white/10">
+        <span class="text-gray-500 font-bold uppercase text-xs mb-4 block">Next Up</span>
+        <h2 class="text-6xl md:text-9xl font-display uppercase hover:text-brand-yellow cursor-pointer transition-colors duration-300">
+          Discover More
+        </h2>
+        <a
+         href="/projects"
+          class="mt-12 inline-flex items-center gap-2 bg-brand-yellow text-brand-dark px-10 py-4 rounded-full font-bold uppercase text-sm hover:scale-105 transition-transform"
+        >
+          View All Projects <ArrowUpRight className="w-4 h-4" />
+      </a>
       </section>
-
-      <section>
-        <SectionTitle>Key Features</SectionTitle>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {project.features?.map((feature, index) => (
-            <Card>
-              <CardContent className="flex items-center gap-4 p-6">
-                <p class="text-lg">{feature}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Results */}
-      <section>
-        <SectionTitle>Key Results</SectionTitle>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {project.results?.map((result, index) => (
-            <Card>
-              <CardContent className="flex items-center gap-4 p-6">
-                <p class="text-lg">{result}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <Gallery gallery={project?.gallery} client:load />
     </div>
-  </div>
 </Layout>

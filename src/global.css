@@ -4,6 +4,7 @@
 
 @theme {
   --font-sans: var(--font-inter), "sans-serif";
+  --font-display: var(--font-display), "sans-serif";
   --color-brand-dark: #062c26;
   --color-brand-green: #0a3d33;
   --color-brand-cream: #f0f0ed;
@@ -12,6 +13,7 @@
 }
 
 body {
+  font-family: var(--font-sans);
   scroll-behavior: smooth;
 }
 

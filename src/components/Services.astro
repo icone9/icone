@@ -1,64 +1,65 @@
 ---
 import { ArrowUpRight } from './icons';
 
-const services = [
+const principles = [
   {
-    title: 'Visual Identity',
-    description: 'Designing distinctive visuals that define your brand.',
-    image: 'https://picsum.photos/seed/branding/600/400',
-    tags: ['Logo', 'Colors', 'Typography']
+    title: 'On What We Trust',
+    description: 'We believe in radical transparency and the power of human-centric intuition over pure data.',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800',
+    tags: ['Transparency', 'Intuition', 'Truth']
   },
   {
-    title: 'Branding',
-    description: 'Building memorable brands that resonate with your audience.',
-    image: 'https://picsum.photos/seed/packaging/600/400',
-    tags: ['Strategy', 'Voice', 'Market Fit']
+    title: 'Why We Build',
+    description: 'We build to create lasting legacies and emotional resonance in an increasingly noisy world.',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800',
+    tags: ['Impact', 'Legacy', 'Purpose']
   },
   {
-    title: 'Website Design',
-    description: 'Crafting user-friendly websites that elevate your digital presence.',
-    image: 'https://picsum.photos/seed/webdesign/600/400',
-    tags: ['UI/UX', 'Framer', 'Development']
+    title: 'How We Build',
+    description: 'By fusing rigorous strategic planning with a healthy dose of unbridled creative chaos.',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800',
+    tags: ['Strategy', 'Craft', 'Innovation']
   }
 ];
 
----
 
-    <section id="services" class="py-20 px-4 md:px-12 max-w-7xl mx-auto bg-brand-cream text-brand-dark rounded-[3rem] my-10">
+---
+    <section id="foundation" class="py-20 px-4 md:px-12 max-w-7xl mx-auto bg-brand-cream text-brand-dark rounded-[3rem] my-10">
       <div class="flex flex-col md:flex-row justify-between items-end mb-12">
         <div>
-          <span class="text-brand-dark/60 font-bold uppercase text-xs tracking-widest mb-2 block">Our Services</span>
+          <span class="text-brand-dark/60 font-bold uppercase text-xs tracking-widest mb-2 block">Our Foundation</span>
           <h2 class="text-5xl md:text-7xl font-display uppercase leading-none">
-            What We Bring <br />
-            To The Table
+            Core <br />
+            Principles
           </h2>
         </div>
-        <button class="hidden md:flex items-center gap-2 border border-brand-dark px-6 py-2 rounded-full uppercase font-bold text-sm hover:bg-brand-dark hover:text-white transition-colors">
-          See All Services <ArrowUpRight className="w-4 h-4" />
-        </button>
+        <div class="hidden md:block max-w-xs text-right">
+            <p class="text-sm font-medium text-gray-600 mb-4 italic">"Design is not just what it looks like, but how it works and why it exists."</p>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {services.map((service, index) => (
-          <div class="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-[400px] flex flex-col">
-            <div class="h-3/5 w-full overflow-hidden relative">
+        {principles.map((item, index) => (
+          <div class="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-[450px] flex flex-col">
+            <div class="w-full overflow-hidden relative">
               <img 
-                src={service.image} 
-                alt={service.title} 
+                src={item.image} 
+                alt={item.title} 
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               />
               <div class="absolute top-4 right-4 bg-brand-yellow text-brand-dark p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <ArrowUpRight className="w-5 h-5" />
               </div>
             </div>
-            <div class="p-6 flex flex-col justify-between flex-grow bg-brand-dark group-hover:bg-brand-green transition-colors duration-300">
+            <div class="p-8 flex flex-col justify-between flex-grow bg-brand-dark group-hover:bg-brand-green transition-colors duration-300">
               <div>
-                <h3 class="text-2xl font-display uppercase text-white mb-2">{service.title}</h3>
-                <p class="text-gray-400 text-sm leading-snug">{service.description}</p>
+                <span class="text-brand-yellow font-display text-3xl mb-1 block opacity-30 group-hover:opacity-100 transition-opacity">0{index + 1}</span>
+                <h3 class="text-2xl font-display uppercase text-white mb-3">{item.title}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">{item.description}</p>
               </div>
               <div class="flex gap-2 mt-4 overflow-x-auto no-scrollbar">
-                {service.tags.map(tag => (
-                   <span class="text-[10px] uppercase font-bold bg-white/10 text-white px-2 py-1 rounded-md whitespace-nowrap">{tag}</span>
+                {item.tags.map(tag => (
+                   <span  class="text-[10px] uppercase font-bold bg-white/10 text-white px-2 py-1 rounded-md whitespace-nowrap">{tag}</span>
                 ))}
               </div>
             </div>
@@ -66,9 +67,15 @@ const services = [
         ))}
       </div>
       
-      <div class="mt-8 md:hidden text-center">
-         <button class="inline-flex items-center gap-2 border border-brand-dark px-6 py-3 rounded-full uppercase font-bold text-sm">
-          See All Services <ArrowUpRight className="w-4 h-4" />
-        </button>
+      <div class="mt-12 text-center">
+         <div class="inline-block p-1 bg-brand-dark/5 rounded-full">
+            <div class="flex items-center gap-4 px-6 py-2">
+                <span class="text-[10px] uppercase font-bold tracking-tighter text-gray-500">Founded 2020</span>
+                <div class="w-1 h-1 bg-brand-dark rounded-full"></div>
+                <span class="text-[10px] uppercase font-bold tracking-tighter text-gray-500">Ethics First</span>
+                <div class="w-1 h-1 bg-brand-dark rounded-full"></div>
+                <span class="text-[10px] uppercase font-bold tracking-tighter text-gray-500">Bold Execution</span>
+            </div>
+         </div>
       </div>
     </section>

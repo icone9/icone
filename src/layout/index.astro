@@ -11,21 +11,22 @@ const { title, description, image } = Astro.props
 ---
 
 <Font cssVariable="--font-inter" preload />
+<Font cssVariable="--font-display" preload />
 
 <!doctype html>
 <html lang="fr">
 	<head>
 		<BaseHead title={title} description={description} image={image} />
 	</head>
-	<body class="scroll-smooth">
+	<body class="scroll-smooth overflow-hidden">
 		<div class="min-h-screen font-sans scroll-smooth">
-			 <div class="min-h-screen bg-brand-dark text-brand-cream font-sans selection:bg-brand-yellow selection:text-brand-dark scroll-smooth">
-      <Navbar />
-      <main>
-       <slot />
-      </main>
-      <Footer />
-    </div>
+			<div class="min-h-screen bg-brand-dark text-brand-cream font-sans selection:bg-brand-yellow selection:text-brand-dark scroll-smooth">
+				<Navbar client:load />
+				<main>
+					<slot />
+				</main>
+				<Footer />
+			</div>
 		</div>
 	</body>
 </html>
