@@ -119,7 +119,7 @@ const ProjectsSection = () => {
           <img
             src={MOCK_PROJECTS.puffilo.thumbnail}
             alt="Puffilo Project"
-            className="relative rounded-[2rem] shadow-2xl w-full object-cover h-[400px] border border-white/10"
+            className="relative rounded-[2rem] shadow-2xl object-cover h-[400px] border border-white/10"
           />
           <img
             src="https://picsum.photos/seed/sweet1/100/100"
@@ -144,7 +144,7 @@ const ProjectsSection = () => {
           <img
             src={MOCK_PROJECTS.haven.thumbnail}
             alt="Haven Project"
-            className="relative rounded-[2rem] shadow-2xl w-full object-cover h-[400px]"
+            className="relative rounded-[2rem] shadow-2xl object-cover h-[400px]"
           />
           <div className="absolute bottom-4 right-4 bg-brand-cream/90 p-4 rounded-xl shadow-lg max-w-[150px]">
             <img
@@ -180,18 +180,21 @@ const ProjectsSection = () => {
       <div className="space-y-6">
         {[
           {
+            id: "lumina",
             name: "Hoptonic Tea",
             date: "Nov 2024",
             type: "Web Design",
             img: "https://picsum.photos/seed/tea/200/100",
           },
           {
+            id: "caca-family",
             name: "Caca Family",
             date: "Oct 2024",
             type: "Web Design",
             img: "https://picsum.photos/seed/family/200/100",
           },
           {
+            id: "edify",
             name: "Edify",
             date: "Sept 2024",
             type: "Branding",
@@ -199,7 +202,7 @@ const ProjectsSection = () => {
           },
         ].map((item, i) => (
           <a
-            href="/projects"
+            href={`/projects/${item.id}`}
             key={i}
             className="group flex flex-col md:flex-row items-center justify-between border-t border-white/10 py-6 hover:bg-white/5 transition-colors px-4 rounded-xl cursor-pointer"
           >

@@ -4,7 +4,7 @@ const navItems = [
   { name: "Home", href: "/#home" },
   { name: "About Us", href: "/#about" },
   { name: "foundation", href: "/#foundation" },
-  { name: "Projects", href: "/#projects" },
+  { name: "Projects", href: "/projects" },
   { name: "Blog", href: "/blog" },
 ];
 // ${scrolled ? "bottom-8 md:top-8 md:bottom-auto" : "top-8"}
@@ -56,28 +56,7 @@ const Navbar: React.FC = () => {
   const handleNavItemClick = (item: (typeof navItems)[0]) => {
     setActive(item.name);
     setIsMenuOpen(false);
-
-    if (item.name === "Home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else if (item.name === "Blog") {
-    } else if (item.name === "Portfolio") {
-      const el = document.querySelector(item.href);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      } else {
-      }
-    } else {
-      const el = document.querySelector(item.href);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      } else {
-        setTimeout(() => {
-          document
-            .querySelector(item.href)
-            ?.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -93,9 +72,12 @@ const Navbar: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Brand Logo */}
-          <div className="text-2xl font-bold font-display tracking-wider text-brand-cream uppercase cursor-pointer hover:text-brand-yellow transition-colors duration-300">
+          <a
+            href="/"
+            className="text-2xl font-bold font-display tracking-wider text-brand-cream uppercase cursor-pointer hover:text-brand-yellow transition-colors duration-300"
+          >
             Icone Tech.
-          </div>
+          </a>
 
           {/* Desktop Links */}
           <nav className="hidden md:flex items-center gap-8">
@@ -103,10 +85,7 @@ const Navbar: React.FC = () => {
               <a
                 key={item.name}
                 href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavItemClick(item);
-                }}
+                onClick={() => handleNavItemClick(item)}
                 className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:text-brand-yellow ${
                   active === item.name
                     ? "text-brand-yellow"
@@ -181,8 +160,9 @@ const Navbar: React.FC = () => {
 
         <div className="flex flex-col gap-8 text-center">
           {navItems.map((item, idx) => (
-            <button
+            <a
               key={item.name}
+              href={item.href}
               onClick={() => handleNavItemClick(item)}
               className="group flex flex-col items-center"
             >
@@ -192,7 +172,7 @@ const Navbar: React.FC = () => {
               <span className="text-5xl font-display uppercase text-brand-cream hover:text-brand-yellow transition-colors">
                 {item.name}
               </span>
-            </button>
+            </a>
           ))}
         </div>
 

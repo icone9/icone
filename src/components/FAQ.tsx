@@ -50,9 +50,12 @@ const FAQ: React.FC = () => {
           <p className="text-gray-300 text-sm mb-4">
             Can't find what you're looking for?
           </p>
-          <button className="flex items-center gap-2 text-brand-yellow font-bold uppercase text-xs border-b border-brand-yellow pb-1 hover:text-white transition-colors">
+          <a
+            href="mailto:contact@iconeht.com"
+            className="flex items-center w-fit gap-2 text-brand-yellow font-bold uppercase text-xs border-b border-brand-yellow pb-1 hover:text-white transition-colors"
+          >
             Contact Support <ArrowUpRight className="w-3 h-3" />
-          </button>
+          </a>
         </div>
       </div>
 

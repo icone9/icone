@@ -4,7 +4,7 @@ import FAQ from '../components/FAQ';
 import Foundation from '../components/Foundation.astro';
 import Hero1 from '../components/Hero1.astro';
 import ProjectsSection from '../components/ProjectSection';
-import Testimonials from '../components/Testimonials.astro';
+import Testimonials from '../components/Testimonials';
 import Layout from '../layout/index.astro';
 import { loadQuery } from '../sanity/lib/load-query';
 import type { Post, Project } from '../sanity/lib/types';
@@ -41,6 +41,6 @@ const { data: projects } = await loadQuery<Project[]>({
   <About />
   <Foundation/>
   <ProjectsSection />
-  <Testimonials />
+  <Testimonials client:load />
   <FAQ client:load/>
 </Layout>
