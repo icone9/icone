@@ -1,9 +1,9 @@
 ---
 import About from '../components/About.astro';
 import FAQ from '../components/FAQ';
+import Foundation from '../components/Foundation.astro';
 import Hero1 from '../components/Hero1.astro';
 import ProjectsSection from '../components/ProjectSection';
-import Services from '../components/Services.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Layout from '../layout/index.astro';
 import { loadQuery } from '../sanity/lib/load-query';
@@ -37,12 +37,10 @@ const { data: projects } = await loadQuery<Project[]>({
 
 
 <Layout title="Test Page" description="This is a test page.">
- 
-        <Hero1 />
-        <About />
-        <Services />
-        <ProjectsSection />
-        <Testimonials />
-        <FAQ client:load/>
-
-  </Layout>
+  <Hero1 />
+  <About />
+  <Foundation/>
+  <ProjectsSection />
+  <Testimonials />
+  <FAQ client:load/>
+</Layout>
