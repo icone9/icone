@@ -3,29 +3,28 @@ import { ArrowUpRight } from '../../components/icons';
 import Layout from '../../layout/index.astro';
 
 
+// When using Sanity, use getStaticPaths like this (and map project + urlForImage for images):
 // export async function getStaticPaths() {
-//   const { data: projects} = await loadQuery<Project[]>({
+//   const { data: projects } = await loadQuery<Project[]>({
 //     query: `*[_type == "project"]{
-//       name,
-//       slug,
-//       logo,
-//       websiteUrl,
-//       mainImage,
+//       title,
+//       subtitle,
+//       "slug": slug.current,
 //       overview,
-//       tags[],
-//       solutions,
-//       challenges,
-//       technologies[],
-//       features[],
-//       gallery[],
-//       results[],
-//       status,
-//       publishedAt,
+//       client,
+//       industry,
+//       "year": publishedAt,
+//       services[],
+//       mainImage,
+//       thumbnail,
+//       challenge,
+//       features[] { title, description },
+//       gallery[]
 //     }`,
 //   });
 //   return projects.map((project) => ({
-//     params: { slug: project.slug.current },
-//     props: { project } 
+//     params: { slug: project.slug },
+//     props: { project },
 //   }));
 // }
 

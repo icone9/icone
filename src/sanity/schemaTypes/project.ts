@@ -1,128 +1,158 @@
 import { defineField, defineType } from "sanity";
 
+export const projectFeatureObject = defineType({
+  name: "projectFeature",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "string", title: "Title" }),
+    defineField({ name: "description", type: "text", title: "Description" }),
+  ],
+  preview: {
+    select: { title: "title" },
+    prepare({ title }) {
+      return { title: title || "Feature" };
+    },
+  },
+});
+
 export const projectType = defineType({
   name: "project",
   type: "document",
   fields: [
     defineField({
-      name: "name",
+      name: "title",
       type: "string",
+      title: "Title",
+      description: "Project title (e.g. \"Puffilo : Bites of Cloud-Like Bliss\")",
+    }),
+    defineField({
+      name: "subtitle",
+      type: "string",
+      title: "Subtitle",
+      description: "Short tagline (e.g. \"Reimagining Confectionery\")",
     }),
     defineField({
       name: "slug",
       type: "slug",
       options: {
-        source: "name",
+        source: "title",
         maxLength: 96,
       },
     }),
     defineField({
-      title: "Website Url",
+      name: "overview",
+      type: "text",
+      title: "Description",
+      description: "Main description / Our Approach section",
+    }),
+    defineField({
+      name: "client",
+      type: "string",
+      title: "Client",
+    }),
+    defineField({
+      name: "industry",
+      type: "string",
+      title: "Industry",
+      description: "e.g. Food & Beverage, Health & Tech, Software",
+    }),
+    defineField({
+      name: "services",
+      type: "array",
+      title: "Services",
+      description: "Used for filters and meta (e.g. Visual Identity, Packaging, UI/UX Design)",
+      of: [{ type: "string" }],
+    }),
+    defineField({
       name: "websiteUrl",
       type: "url",
+      title: "Website URL",
     }),
     defineField({
       name: "logo",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      title: "Logo",
+      options: { hotspot: true },
     }),
     defineField({
       name: "mainImage",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      title: "Hero image",
+      description: "Large hero image on project detail page",
+      options: { hotspot: true },
     }),
     defineField({
-      name: "categories",
-      type: "array",
-      of: [{ type: "reference", to: { type: "category" } }],
+      name: "thumbnail",
+      type: "image",
+      title: "Thumbnail",
+      description: "Card/listing image. Falls back to hero if empty.",
+      options: { hotspot: true },
     }),
     defineField({
-      title: "Overview",
-      name: "overview",
+      name: "challenge",
       type: "text",
+      title: "Challenge",
+      description: "Optional text for \"The Challenge\" section",
     }),
     defineField({
-      title: "Tags",
-      name: "tags",
-      type: "array",
-      of: [{ type: "string" }],
-    }),
-    defineField({
-      title: "Status",
-      name: "status",
-      type: "string",
-      options: {
-        list: [
-          { title: "Beta", value: "beta" },
-          { title: "Alpha", value: "Alpha" },
-          { title: "Production", value: "production" },
-          { title: "Deprecated", value: "deprecated" },
-          { title: "Discontinued", value: "discontinued" },
-          { title: "Other", value: "other" },
-        ], // <-- predefined valuess
-        layout: "radio", // <-- defaults to 'dropdown'
-      },
-    }),
-
-    defineField({
-      title: "Technologies",
-      name: "technologies",
-      type: "array",
-      of: [{ type: "string" }],
-    }),
-    defineField({
-      title: "Challenges",
-      name: "challenges",
-      type: "text",
-    }),
-    defineField({
-      title: "Solutions",
-      name: "solutions",
-      type: "text",
-    }),
-    defineField({
-      title: "Features",
       name: "features",
       type: "array",
-      of: [{ type: "string" }],
+      title: "Key features",
+      of: [{ type: "projectFeature" }],
     }),
     defineField({
-      title: "Results",
-      name: "results",
-      type: "array",
-      of: [{ type: "string" }],
-    }),
-    defineField({
-      title: "Gallery",
       name: "gallery",
       type: "array",
+      title: "Gallery",
       of: [
         {
           type: "image",
-          options: {
-            hotspot: true,
-          },
+          options: { hotspot: true },
         },
       ],
     }),
     defineField({
-      name: "publishedAt",
-      type: "datetime",
+      name: "status",
+      type: "string",
+      title: "Status",
+      options: {
+        list: [
+          { title: "Beta", value: "beta" },
+          { title: "Alpha", value: "alpha" },
+          { title: "Production", value: "production" },
+          { title: "Deprecated", value: "deprecated" },
+          { title: "Discontinued", value: "discontinued" },
+          { title: "Other", value: "other" },
+        ],
+        layout: "radio",
+      },
     }),
     defineField({
-      name: "body",
-      type: "blockContent",
+      name: "technologies",
+      type: "array",
+      title: "Technologies",
+      of: [{ type: "string" }],
+    }),
+    defineField({
+      name: "publishedAt",
+      type: "datetime",
+      title: "Published at",
+      description: "Used for \"Year\" on the page",
     }),
   ],
 
   preview: {
     select: {
-      title: "name",
-      media: "logo",
+      title: "title",
+      subtitle: "subtitle",
+      media: "mainImage",
+    },
+    prepare({ title, subtitle, media }) {
+      return {
+        title: title || "Untitled project",
+        subtitle: subtitle || undefined,
+        media,
+      };
     },
   },
 });

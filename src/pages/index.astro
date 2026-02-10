@@ -10,13 +10,16 @@ import { loadQuery } from '../sanity/lib/load-query';
 import type { Post, Project } from '../sanity/lib/types';
 
 const { data: projects } = await loadQuery<Project[]>({
-    query: `*[_type == "project"] | order(_createdAt asc){
-      name,
+    query: `*[_type == "project"] | order(publishedAt desc){
+      title,
+      subtitle,
       slug,
-      logo,
-      mainImage,
       overview,
-      tags[],
+      client,
+      industry,
+      services[],
+      mainImage,
+      thumbnail,
       status,
       publishedAt,
     }`,
@@ -40,7 +43,7 @@ const { data: projects } = await loadQuery<Project[]>({
   <Hero1 />
   <About />
   <Foundation/>
-  <ProjectsSection />
+  <ProjectsSection/>
   <Testimonials client:load />
   <FAQ client:load/>
 </Layout>
