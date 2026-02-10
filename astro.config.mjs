@@ -8,7 +8,7 @@ export default defineConfig({
   site: "https://www.iconeht.com/",
   integrations: [
     sanity({
-      projectId: "avd06zyn",
+      projectId: "aa8j5crs",
       dataset: "production",
       useCdn: false,
       apiVersion: "2025-04-20",

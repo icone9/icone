@@ -3,7 +3,7 @@ import { structureTool } from "sanity/structure";
 import { schema } from "./src/sanity/schemaTypes";
 
 export default defineConfig({
-  projectId: 'avd06zyn',
+  projectId: 'aa8j5crs',
   dataset: 'production',
   plugins: [structureTool()],
   schema
