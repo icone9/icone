@@ -4,34 +4,34 @@ import { ArrowUpRight } from "./icons";
 const TESTIMONIALS_DATA = [
   {
     id: 1,
-    company: "Bloomistry",
-    emoji: "🌸",
+    company: "DevStack",
+    emoji: "⚡",
     quote:
-      "“Brightcove transformed our digital presence with a stunning campaign that resonated perfectly with our audience. The attention to detail and creative direction was unmatched.”",
+      "“Their tools integrated into our pipeline from day one. Solid docs, sensible defaults, and updates that don't break things. Exactly what we needed.”",
     author: "Mark Reynolds",
-    role: "Marketing Director",
+    role: "Engineering Lead",
     image:
       "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: 2,
     company: "TechFlow",
-    emoji: "⚡",
+    emoji: "🔧",
     quote:
-      "“Working with this team felt like having an extension of our own. They understood our technical constraints but never let them limit the creative vision. Truly exceptional partners.”",
+      "“We evaluated a lot of options. Their product was the one that actually shipped with the features we needed and stayed maintainable. Great support when we had questions.”",
     author: "Sarah Jenkins",
-    role: "CEO, TechFlow",
+    role: "CTO, TechFlow",
     image:
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: 3,
-    company: "EcoWare",
-    emoji: "🌿",
+    company: "ScaleOps",
+    emoji: "📦",
     quote:
-      "“The rebranding process was deep and thoughtful. They didn’t just give us a new logo; they gave us a new way to tell our story to a global audience who cares about sustainability.”",
+      "“Reliable software with clear licensing and predictable releases. We rolled it out across the team and the documentation made onboarding straightforward.”",
     author: "David Chen",
-    role: "Founder",
+    role: "Head of Platform",
     image:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
   },
@@ -75,8 +75,8 @@ const Testimonials = () => {
           What Our <span className="text-brand-green">Clients Say</span>
         </h2>
         <p className="mt-4 text-gray-500 text-sm md:text-base max-w-lg mx-auto">
-          Real feedback from the clients and brands we've partnered with to
-          achieve extraordinary results.
+          What teams and developers say about our software and how it fits into
+          their workflow.
         </p>
       </div>
 

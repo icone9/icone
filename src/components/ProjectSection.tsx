@@ -82,10 +82,10 @@ const ProjectsSection = () => {
     <section id="portfolio" className="py-20 px-4 md:px-12 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <span className="text-brand-yellow font-bold uppercase text-xs tracking-widest mb-2 block">
-          Selected Works
+          Our Products
         </span>
         <h2 className="text-5xl md:text-7xl font-display uppercase text-brand-cream">
-          Our Brightest Creations
+          Software We Publish
         </h2>
       </div>
 
