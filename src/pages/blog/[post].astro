@@ -1,86 +1,197 @@
 ---
-import PortableText from '../../components/PortableText.astro';
-import Badge from '../../components/ui/Badge.astro';
-import Layout from '../../layouts/Layout.astro';
-import { loadQuery } from '../../sanity/lib/load-query';
-import type { Post } from '../../sanity/lib/types';
-import { urlForImage } from '../../sanity/lib/url-for-image';
+import { ArrowUpRight } from '../../components/icons';
+import Layout from '../../layout/index.astro';
 
 
 export async function getStaticPaths() {
-  const { data: posts } = await loadQuery<Post[]>({
-    query: `*[_type == "post"]{
-      slug,
-      title,
-      overview,
-      body,
-      mainImage,
-      categories[]->{ title },
-      author->{
-        name,
-        role,
-        image
-      },
-      publishedAt,
-    }`,
-  });
-  return posts.map((post) => ({
-    params: { post: post.slug.current },
+  // const { data: posts } = await loadQuery<Post[]>({
+  //   query: `*[_type == "post"]{
+  //     slug,
+  //     title,
+  //     overview,
+  //     body,
+  //     mainImage,
+  //     categories[]->{ title },
+  //     author->{
+  //       name,
+  //       role,
+  //       image
+  //     },
+  //     publishedAt,
+  //   }`,
+  // });
+  // return posts.map((post) => ({
+  //   params: { post: post.slug.current },
+  //   props: { post} 
+  // }));
+  return [
+  {
+    id: "future-branding",
+    title: "The Future of Branding: Why Minimalism Still Wins in 2025",
+    excerpt:
+      "Explore how clean lines and intentional whitespace are evolving to meet the demands of a high-speed digital world.",
+    content: [],
+    author: "Sarah Chen",
+    authorRole: "Design Director",
+    date: "Feb 12, 2025",
+    category: "Design",
+    image:
+      "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=1200",
+    readTime: "6 min read",
+  },
+  {
+    id: "ai-creative-process",
+    title: "How AI is Reshaping the Creative Process without Replacing Humans",
+    excerpt:
+      "A deep dive into the symbiotic relationship between generative tools and the human creative spark.",
+    content: [],
+    author: "Marcus J.",
+    authorRole: "Tech Lead",
+    date: "Feb 08, 2025",
+    category: "Technology",
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
+    readTime: "8 min read",
+  },
+  {
+    id: "ux-psychology",
+    title: "Psychology in UX: Designing for Emotional Resonance",
+    excerpt:
+      "Understanding the cognitive biases that drive user behavior and how to design for authentic connection.",
+    content: [],
+    author: "Elena Rossi",
+    authorRole: "UX Strategist",
+    date: "Jan 28, 2025",
+    category: "Strategy",
+    image:
+      "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=1200",
+    readTime: "5 min read",
+  },
+].map((post) => ({
+    params: { post: post.id },
     props: { post} 
-  }));
+  }));;
 }
 
 const { post } = Astro.props;
 
 ---
-
+<!-- image={urlForImage(post.mainImage).url()} -->
 <Layout
-description={post.overview} 
+ description={post.excerpt} 
 title={post.title}
-image={urlForImage(post.mainImage).url()}
 >
-      {/* Hero Section */}
-      <div class="relative h-[50vh] md:h-[60vh] overflow-hidden">
+<div class="bg-brand-dark min-h-screen text-brand-cream">
+      {/* Hero */}
+      <section class="relative h-[60vh] md:h-[75vh] w-full overflow-hidden">
         <img 
-          src={urlForImage(post.mainImage).format('webp').fit('fill').url()} 
+          src={post.image} 
           alt={post.title} 
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover opacity-50"
         />
-        <div class="absolute inset-0 bg-black/50" />
-      </div>
-
-      {/* Content */}
-      <div class="container mx-auto px-4 py-16">
-        <a href="/blog" class="inline-flex items-center text-sm mb-8 hover:text-primary">
-          <svg width="24" height="24" class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" color="#000"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-          Back to Blog
-        </a>
-
-        <article class="max-w-3xl mx-auto">
-          <div class="flex items-center gap-4 mb-6">
-            <Badge>{post.categories[0]?.title}</Badge>
-            <span class="text-sm text-muted-foreground">{new Date(post.publishedAt).toLocaleDateString()}</span>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 w-full p-4 md:p-12 max-w-5xl mx-auto left-1/2 -translate-x-1/2">
+          <button 
+            class="group flex items-center gap-2 text-brand-yellow font-bold uppercase text-xs mb-8 hover:text-white transition-colors"
+          >
+            <span class="rotate-180"><ArrowUpRight className="w-4 h-4" /></span>
+            Back to Journal
+          </button>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-brand-yellow">
+              <span>{post.category}</span>
+              <span class="w-1 h-1 bg-white rounded-full"></span>
+              <span>{post.date}</span>
+            </div>
+            <h1 class="text-5xl md:text-8xl font-display uppercase leading-none max-w-4xl">
+              {post.title}
+            </h1>
           </div>
+        </div>
+      </section>
 
-          <h1 class="text-4xl md:text-5xl font-bold mb-8">{post.title}</h1>
-
-          {/* Author */}
-          <div class="flex items-center gap-4 mb-12 p-4 border rounded-lg">
-            <img
-              src={urlForImage(post.author.image).width(48).height(48).url()}
-              alt={post.author.name}
-              class="w-12 h-12 rounded-full object-cover"
-            />
+      {/* Article Content */}
+      <section class="py-20 px-4 md:px-12">
+        <div class="max-w-3xl mx-auto">
+          {/* Author Header */}
+          <div class="flex items-center gap-4 mb-16 pb-12 border-b border-white/10">
+            <div class="w-14 h-14 rounded-full bg-brand-yellow flex items-center justify-center font-display text-2xl text-brand-dark">
+              {post.author[0]}
+            </div>
             <div>
-              <h3 class="font-medium">{post.author.name}</h3>
-              <p class="text-sm text-muted-foreground">Ceo of Icone</p>
+              <div class="font-bold text-white text-lg">Written by {post.author}</div>
+              <div class="text-gray-500 text-xs uppercase font-bold tracking-wider">{post.authorRole} • {post.readTime}</div>
             </div>
           </div>
 
+          {/* Body Text */}
+          <div class="prose prose-invert max-w-none space-y-8 font-sans text-gray-300 text-lg leading-relaxed">
+            <p class="text-2xl text-white font-medium italic border-l-4 border-brand-yellow pl-8 py-2">
+              {post.excerpt}
+            </p>
+            
+            <p>
+              In the fast-evolving landscape of modern branding, we often find ourselves caught between the desire for novelty and the need for longevity. As we look towards 2025, the principles of minimalism aren't just surviving; they're becoming the backbone of high-performance digital identities.
+            </p>
 
-          <div class="prose prose-lg max-w-none">
-            <PortableText portableText={post.body} />
+            <h2 class="text-3xl font-display uppercase text-white pt-8">The Visual Saturated Era</h2>
+            <p>
+              We live in an age of sensory overload. Every screen, every street corner, and every notification is a battle for our cognitive attention. In this environment, minimalism acts as a filter—a moment of clarity amidst the noise. 
+            </p>
+            
+            <div class="bg-brand-green/20 p-8 rounded-3xl border border-white/5 my-12">
+              <h3 class="text-xl font-display uppercase mb-4 text-brand-yellow">Core Principles</h3>
+              <ul class="list-disc pl-6 space-y-4">
+                <li>Reduction without loss of meaning</li>
+                <li>Strategic use of whitespace to direct attention</li>
+                <li>Typographic hierarchy as a primary design element</li>
+                <li>Functional aesthetics over decorative trends</li>
+              </ul>
+            </div>
+
+            <p>
+              As designers, our role is no longer just to "make things pretty." Our role is to facilitate understanding. Minimalism, when executed correctly, is the shortest path between a brand's message and a user's comprehension.
+            </p>
+
+            <h2 class="text-3xl font-display uppercase text-white pt-8">Looking Ahead</h2>
+            <p>
+              The brands that will win in the coming years are those that respect the user's time and mental energy. By stripping away the non-essential, we leave room for what truly matters: the human connection at the heart of every brand story.
+            </p>
           </div>
-        </article>
-      </div>
+
+          {/* Newsletter Sign Up */}
+          <div class="mt-24 bg-brand-yellow p-8 md:p-12 rounded-[3rem] text-brand-dark flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2">
+              <h3 class="text-3xl font-display uppercase leading-tight mb-2">Subscribe to our weekly digest</h3>
+              <p class="font-bold text-sm uppercase opacity-70">Get the latest insights delivered to your inbox.</p>
+            </div>
+            <div class="md:w-1/2 w-full">
+              <form class="flex gap-2">
+                <input 
+                  type="email" 
+                  placeholder="Your Email" 
+                  class="bg-white/30 border-2 border-brand-dark/20 flex-grow px-6 py-3 rounded-full placeholder:text-brand-dark/50 focus:outline-none focus:border-brand-dark"
+                />
+                <button class="bg-brand-dark text-white p-3 rounded-full hover:scale-105 transition-transform">
+                  <ArrowUpRight className="w-6 h-6" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer CTA */}
+      <section class="py-20 text-center border-t border-white/10">
+        <span class="text-gray-500 font-bold uppercase text-xs mb-4 block">Thanks for reading</span>
+        <h2 class="text-6xl md:text-9xl font-display uppercase hover:text-brand-yellow cursor-pointer transition-colors duration-300">
+          Back to Journal
+        </h2>
+        <button 
+          class="mt-12 inline-flex items-center gap-2 bg-brand-yellow text-brand-dark px-10 py-4 rounded-full font-bold uppercase text-sm hover:scale-105 transition-transform"
+        >
+          Explore All Posts <ArrowUpRight className="w-4 h-4" />
+        </button>
+      </section>
+    </div>
 </Layout>

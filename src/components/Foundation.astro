@@ -1,0 +1,80 @@
+---
+import { ArrowUpRight } from './icons';
+
+const principles = [
+  {
+    title: 'On What We Trust',
+    description: 'We believe in transparency, clean architecture, and code that lasts. Security and reliability aren’t optional—they’re the foundation of every release.',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800',
+    tags: ['Transparency', 'Quality', 'Security']
+  },
+  {
+    title: 'Why We Build',
+    description: 'We build software that solves real problems and stands the test of time. Our products are built to be depended on by teams and individuals every day.',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800',
+    tags: ['Impact', 'Reliability', 'Purpose']
+  },
+  {
+    title: 'How We Build',
+    description: 'Rigorous engineering practices, clear documentation, and iterative releases. We ship often, listen to users, and improve continuously.',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800',
+    tags: ['Craft', 'Documentation', 'Iteration']
+  }
+];
+---
+
+<section id="foundation" class="py-20 px-4 md:px-12 max-w-7xl mx-auto bg-brand-cream text-brand-dark rounded-[3rem] my-10">
+  <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+    <div>
+      <span class="text-brand-dark/60 font-bold uppercase text-xs tracking-widest mb-2 block">Our Foundation</span>
+      <h2 class="text-5xl md:text-7xl font-display uppercase leading-none">
+        Core <br />
+        Principles
+      </h2>
+    </div>
+    <div class="hidden md:block max-w-xs text-right">
+        <p class="text-sm font-medium text-gray-600 mb-4 italic">"Software is a great combination of artistry and engineering."</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {principles.map((item, index) => (
+      <div class="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-[450px] flex flex-col">
+        <div class="w-full overflow-hidden relative">
+          <img 
+            src={item.image} 
+            alt={item.title} 
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+          />
+          <div class="absolute top-4 right-4 bg-brand-yellow text-brand-dark p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <ArrowUpRight className="w-5 h-5" />
+          </div>
+        </div>
+        <div class="p-8 flex flex-col justify-between flex-grow bg-brand-dark group-hover:bg-brand-green transition-colors duration-300">
+          <div>
+            <span class="text-brand-yellow font-display text-3xl mb-1 block opacity-30 group-hover:opacity-100 transition-opacity">0{index + 1}</span>
+            <h3 class="text-2xl font-display uppercase text-white mb-3">{item.title}</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">{item.description}</p>
+          </div>
+          <div class="flex gap-2 mt-4 overflow-x-auto no-scrollbar">
+            {item.tags.map(tag => (
+                <span  class="text-[10px] uppercase font-bold bg-white/10 text-white px-2 py-1 rounded-md whitespace-nowrap">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <div class="mt-12 text-center">
+      <div class="inline-block p-1 bg-brand-dark/5 rounded-full">
+        <div class="flex items-center gap-4 px-6 py-2">
+            <span class="text-[10px] uppercase font-bold tracking-tighter text-gray-500">Founded 2020</span>
+            <div class="w-1 h-1 bg-brand-dark rounded-full"></div>
+            <span class="text-[10px] uppercase font-bold tracking-tighter text-gray-500">Quality First</span>
+            <div class="w-1 h-1 bg-brand-dark rounded-full"></div>
+            <span class="text-[10px] uppercase font-bold tracking-tighter text-gray-500">Ship Often</span>
+        </div>
+      </div>
+  </div>
+</section>

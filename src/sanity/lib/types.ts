@@ -11,20 +11,27 @@ export type Post = {
   publishedAt: string;
 };
 
+export type ProjectFeature = {
+  title: string;
+  description: string;
+};
+
 export type Project = {
-  name: string;
-  websiteUrl: string;
+  title: string;
+  subtitle?: string;
   slug: { current: string };
-  logo: { asset: SanityAsset };
-  mainImage: { asset: SanityAsset };
   overview: string;
-  tags: string[];
-  solutions: string;
-  challenges: string;
-  gallery: { asset: SanityAsset }[];
-  technologies: string[];
-  features: string[];
-  results: string[];
-  status: string;
-  publishedAt: string;
+  client?: string;
+  industry?: string;
+  services?: string[];
+  websiteUrl?: string;
+  logo?: { asset: SanityAsset };
+  mainImage?: { asset: SanityAsset };
+  thumbnail?: { asset: SanityAsset };
+  challenge?: string;
+  features?: ProjectFeature[];
+  gallery?: { asset: SanityAsset }[];
+  status?: string;
+  technologies?: string[];
+  publishedAt?: string;
 };

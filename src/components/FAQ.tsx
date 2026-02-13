@@ -3,34 +3,34 @@ import { ArrowUpRight, Minus, Plus } from "./icons";
 
 const faqs = [
   {
-    question: "What does Brightcove specialize in?",
+    question: "What kind of software do you publish?",
     answer:
-      "Brightcove is a full-service creative marketing agency specializing in branding, digital campaigns, social media management, content creation, and web design. We craft impactful solutions tailored to your brand goals.",
+      "We publish a range of software products—from desktop and mobile applications to SaaS and developer tools. Our focus is on reliable, well-documented software that teams and individuals can depend on.",
   },
   {
-    question: "Who are your typical clients?",
+    question: "Who uses your products?",
     answer:
-      "We work with ambitious startups, established brands looking for a refresh, and companies ready to scale their digital presence across various industries including tech, lifestyle, and food & beverage.",
+      "Our products serve developers, small teams, and enterprises across industries. We build for clarity and longevity, whether it's productivity tools, dev tooling, or platform software.",
   },
   {
-    question: "How do I start a project with Brightcove?",
+    question: "How can I get started with your products?",
     answer:
-      "Simply click the 'Let's Create Together' button below or reach out via email. We'll schedule a discovery call to understand your needs.",
+      "Browse our products above or reach out via the contact link. We offer trials, documentation, and support to help you evaluate and adopt our software.",
   },
   {
-    question: "What's your process for developing a campaign?",
+    question: "What's your approach to releases and updates?",
     answer:
-      "Research > Strategy > Creative Concepting > Execution > Analysis. We ensure every step is data-informed and creatively inspired.",
+      "We follow predictable release cycles with clear changelogs and backward compatibility in mind. Security and bug fixes are prioritized; we communicate breaking changes in advance.",
   },
   {
-    question: "Do you offer custom packages?",
+    question: "Do you offer enterprise or custom licensing?",
     answer:
-      "Yes! Every business is unique. We tailor our services to fit your specific requirements and budget.",
+      "Yes. We offer volume licensing, enterprise support, and custom arrangements for teams and organizations. Contact us to discuss your requirements.",
   },
   {
-    question: "How long does it take to complete a project?",
+    question: "How do you handle support and documentation?",
     answer:
-      "Timelines vary by project scope. A branding project might take 4-6 weeks, while a full website overhaul could take 8-12 weeks.",
+      "Every product comes with documentation, guides, and a support channel. We respond to issues and feature requests and keep our docs up to date with each release.",
   },
 ];
 
@@ -50,9 +50,12 @@ const FAQ: React.FC = () => {
           <p className="text-gray-300 text-sm mb-4">
             Can't find what you're looking for?
           </p>
-          <button className="flex items-center gap-2 text-brand-yellow font-bold uppercase text-xs border-b border-brand-yellow pb-1 hover:text-white transition-colors">
-            Contact Support <ArrowUpRight className="w-3 h-3" />
-          </button>
+          <a
+            href="mailto:contact@iconeht.com"
+            className="flex items-center w-fit gap-2 text-brand-yellow font-bold uppercase text-xs border-b border-brand-yellow pb-1 hover:text-white transition-colors"
+          >
+            Contact Us <ArrowUpRight className="w-3 h-3" />
+          </a>
         </div>
       </div>
 
