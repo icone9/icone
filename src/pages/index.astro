@@ -7,7 +7,7 @@ import ProjectsSection from '../components/ProjectSection';
 import Testimonials from '../components/Testimonials';
 import Layout from '../layout/index.astro';
 import { loadQuery } from '../sanity/lib/load-query';
-import type { Post, Project } from '../sanity/lib/types';
+import type { Project } from '../sanity/lib/types';
 
 const { data: projects } = await loadQuery<Project[]>({
     query: `*[_type == "project"] | order(publishedAt desc){
@@ -24,18 +24,6 @@ const { data: projects } = await loadQuery<Project[]>({
       publishedAt,
     }`,
   });
-
-  const { data: posts } = await loadQuery<Post[]>({
-    query: `*[_type == "post"][0..3] | order(_createdAt asc){
-      title,
-      slug,
-      mainImage,
-      overview,
-      categories[]->{ title},
-      publishedAt,
-    }`,
-  });
-
 ---
 
 
@@ -43,7 +31,7 @@ const { data: projects } = await loadQuery<Project[]>({
   <Hero1 />
   <About />
   <Foundation/>
-  <ProjectsSection/>
+  <ProjectsSection projects={projects}/>
   <Testimonials client:load />
   <FAQ client:load/>
 </Layout>

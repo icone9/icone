@@ -1,188 +1,192 @@
 ---
+import dayjs from 'dayjs';
 import { ArrowUpRight } from '../../components/icons';
 import Layout from '../../layout/index.astro';
+import { loadQuery } from '../../sanity/lib/load-query';
+import type { Project } from '../../sanity/lib/types';
+import { urlForImage } from '../../sanity/lib/url-for-image';
 
 
 // When using Sanity, use getStaticPaths like this (and map project + urlForImage for images):
-// export async function getStaticPaths() {
-//   const { data: projects } = await loadQuery<Project[]>({
-//     query: `*[_type == "project"]{
-//       title,
-//       subtitle,
-//       "slug": slug.current,
-//       overview,
-//       client,
-//       industry,
-//       "year": publishedAt,
-//       services[],
-//       mainImage,
-//       thumbnail,
-//       challenge,
-//       features[] { title, description },
-//       gallery[]
-//     }`,
-//   });
-//   return projects.map((project) => ({
-//     params: { slug: project.slug },
-//     props: { project },
-//   }));
-// }
-
 export async function getStaticPaths() {
-const projects = [
-   {
-    id: "puffilo",
-    title: "Puffilo : Bites of Cloud-Like Bliss",
-    subtitle: "Reimagining Confectionery",
-    description:
-      'Puffilo needed a visual language that spoke to the "cloud-like" texture of their products. We developed a soft-touch packaging system and a pastel-driven color palette.',
-    client: "Puffilo Sweets",
-    industry: "Food & Beverage",
-    year: "2025",
-    services: ["Visual Identity", "Packaging"],
-    heroImage:
-      "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&q=80&w=2000",
-    thumbnail: "https://picsum.photos/seed/puffilo/800/600",
-    features: [
-      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
-      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
-      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
-    ],
-    gallery: [
-      'https://picsum.photos/seed/p1/800/600',
-      'https://picsum.photos/seed/p2/800/1000',
-      'https://picsum.photos/seed/p3/800/800',
-      'https://picsum.photos/seed/p4/800/500'
-    ]
-  },
-  {
-    id: "haven",
-    title: "Haven: Unleash Your Best Self!",
-    subtitle: "Digital Fitness Revolution",
-    description:
-      "Haven is more than a workout app; it is a mental health and physical fitness sanctuary. We created a UI that feels calming yet motivating.",
-    client: "Haven Labs",
-    industry: "Health & Tech",
-    year: "2024",
-    services: ["UI/UX Design", "Branding"],
-    heroImage:
-      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000",
-    thumbnail: "https://picsum.photos/seed/fitness/800/600",
-    features: [
-      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
-      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
-      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
-    ],
-   gallery: [
-      'https://picsum.photos/seed/p1/800/600',
-      'https://picsum.photos/seed/p2/800/1000',
-      'https://picsum.photos/seed/p3/800/800',
-      'https://picsum.photos/seed/p4/800/500'
-    ]
-  },
-  {
-    id: "hoptonic",
-    title: "Hoptonic Tea : Natural Energy",
-    subtitle: "Refreshment Redefined",
-    description:
-      "A modern take on traditional tea culture, bringing vibrant energy to the beverage market.",
-    client: "Hoptonic Co.",
-    industry: "Beverage",
-    year: "2024",
-    services: ["Web Design", "Strategy"],
-    heroImage: "https://picsum.photos/seed/tea/1200/800",
-    thumbnail: "https://picsum.photos/seed/tea/800/600",
-    features: [
-      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
-      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
-      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
-    ],
-  gallery: [
-      'https://picsum.photos/seed/p1/800/600',
-      'https://picsum.photos/seed/p2/800/1000',
-      'https://picsum.photos/seed/p3/800/800',
-      'https://picsum.photos/seed/p4/800/500'
-    ]
-  },
-  {
-    id: "caca-family",
-    title: "Caca Family : Roots of Love",
-    subtitle: "Community First Branding",
-    description:
-      "Building a brand for a non-profit organization focused on family support and community growth.",
-    client: "Caca Foundation",
-    industry: "Non-Profit",
-    year: "2024",
-    services: ["Web Design", "Branding"],
-    heroImage: "https://picsum.photos/seed/family/1200/800",
-    thumbnail: "https://picsum.photos/seed/family/800/600",
-    features: [
-      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
-      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
-      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
-    ],
-    gallery: [
-      'https://picsum.photos/seed/p1/800/600',
-      'https://picsum.photos/seed/p2/800/1000',
-      'https://picsum.photos/seed/p3/800/800',
-      'https://picsum.photos/seed/p4/800/500'
-    ]
-  },
-  {
-    id: "edify",
-    title: "Edify : Knowledge for All",
-    subtitle: "Educational Platform",
-    description:
-      "Streamlining the online learning experience through intuitive design and clear architecture.",
-    client: "Edify Tech",
-    industry: "Education",
-    year: "2024",
-    services: ["Branding", "UI/UX Design"],
-    heroImage: "https://picsum.photos/seed/tech/1200/800",
-    thumbnail: "https://picsum.photos/seed/tech/800/600",
-   features: [
-      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
-      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
-      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
-    ],
-   gallery: [
-      'https://picsum.photos/seed/p1/800/600',
-      'https://picsum.photos/seed/p2/800/1000',
-      'https://picsum.photos/seed/p3/800/800',
-      'https://picsum.photos/seed/p4/800/500'
-    ]
-  },
-  {
-    id: "lumina",
-    title: "Lumina : Radiant Living",
-    subtitle: "Luxury Real Estate",
-    description:
-      "Capturing the essence of high-end architectural design through cinematic photography and elite web presence.",
-    client: "Lumina Estates",
-    industry: "Real Estate",
-    year: "2023",
-    services: ["Visual Identity", "Web Design"],
-    heroImage: "https://picsum.photos/seed/house/1200/800",
-    thumbnail: "https://picsum.photos/seed/house/800/600",
-    features: [
-      { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
-      { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
-      { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
-    ],
-    gallery: [
-      'https://picsum.photos/seed/p1/800/600',
-      'https://picsum.photos/seed/p2/800/1000',
-      'https://picsum.photos/seed/p3/800/800',
-      'https://picsum.photos/seed/p4/800/500'
-    ]
-  },
-]
-
-return projects.map((project) => ({
-    params: { slug: project.id },
-    props: { project } 
+  const { data: projects } = await loadQuery<Project[]>({
+    query: `*[_type == "project"]{
+      title,
+      subtitle,
+      "slug": slug.current,
+      overview,
+      client,
+      industry,
+      "year": publishedAt,
+      services[],
+      mainImage,
+      thumbnail,
+      challenge,
+      features[] { title, description },
+      gallery[]
+    }`,
+  });
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
   }));
 }
+
+// export async function getStaticPaths() {
+// const projects = [
+//    {
+//     id: "puffilo",
+//     title: "Puffilo : Bites of Cloud-Like Bliss",
+//     subtitle: "Reimagining Confectionery",
+//     description:
+//       'Puffilo needed a visual language that spoke to the "cloud-like" texture of their products. We developed a soft-touch packaging system and a pastel-driven color palette.',
+//     client: "Puffilo Sweets",
+//     industry: "Food & Beverage",
+//     year: "2025",
+//     services: ["Visual Identity", "Packaging"],
+//     heroImage:
+//       "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&q=80&w=2000",
+//     thumbnail: "https://picsum.photos/seed/puffilo/800/600",
+//     features: [
+//       { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+//       { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+//       { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+//     ],
+//     gallery: [
+//       'https://picsum.photos/seed/p1/800/600',
+//       'https://picsum.photos/seed/p2/800/1000',
+//       'https://picsum.photos/seed/p3/800/800',
+//       'https://picsum.photos/seed/p4/800/500'
+//     ]
+//   },
+//   {
+//     id: "haven",
+//     title: "Haven: Unleash Your Best Self!",
+//     subtitle: "Digital Fitness Revolution",
+//     description:
+//       "Haven is more than a workout app; it is a mental health and physical fitness sanctuary. We created a UI that feels calming yet motivating.",
+//     client: "Haven Labs",
+//     industry: "Health & Tech",
+//     year: "2024",
+//     services: ["UI/UX Design", "Branding"],
+//     heroImage:
+//       "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000",
+//     thumbnail: "https://picsum.photos/seed/fitness/800/600",
+//     features: [
+//       { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+//       { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+//       { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+//     ],
+//    gallery: [
+//       'https://picsum.photos/seed/p1/800/600',
+//       'https://picsum.photos/seed/p2/800/1000',
+//       'https://picsum.photos/seed/p3/800/800',
+//       'https://picsum.photos/seed/p4/800/500'
+//     ]
+//   },
+//   {
+//     id: "hoptonic",
+//     title: "Hoptonic Tea : Natural Energy",
+//     subtitle: "Refreshment Redefined",
+//     description:
+//       "A modern take on traditional tea culture, bringing vibrant energy to the beverage market.",
+//     client: "Hoptonic Co.",
+//     industry: "Beverage",
+//     year: "2024",
+//     services: ["Web Design", "Strategy"],
+//     heroImage: "https://picsum.photos/seed/tea/1200/800",
+//     thumbnail: "https://picsum.photos/seed/tea/800/600",
+//     features: [
+//       { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+//       { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+//       { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+//     ],
+//   gallery: [
+//       'https://picsum.photos/seed/p1/800/600',
+//       'https://picsum.photos/seed/p2/800/1000',
+//       'https://picsum.photos/seed/p3/800/800',
+//       'https://picsum.photos/seed/p4/800/500'
+//     ]
+//   },
+//   {
+//     id: "caca-family",
+//     title: "Caca Family : Roots of Love",
+//     subtitle: "Community First Branding",
+//     description:
+//       "Building a brand for a non-profit organization focused on family support and community growth.",
+//     client: "Caca Foundation",
+//     industry: "Non-Profit",
+//     year: "2024",
+//     services: ["Web Design", "Branding"],
+//     heroImage: "https://picsum.photos/seed/family/1200/800",
+//     thumbnail: "https://picsum.photos/seed/family/800/600",
+//     features: [
+//       { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+//       { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+//       { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+//     ],
+//     gallery: [
+//       'https://picsum.photos/seed/p1/800/600',
+//       'https://picsum.photos/seed/p2/800/1000',
+//       'https://picsum.photos/seed/p3/800/800',
+//       'https://picsum.photos/seed/p4/800/500'
+//     ]
+//   },
+//   {
+//     id: "edify",
+//     title: "Edify : Knowledge for All",
+//     subtitle: "Educational Platform",
+//     description:
+//       "Streamlining the online learning experience through intuitive design and clear architecture.",
+//     client: "Edify Tech",
+//     industry: "Education",
+//     year: "2024",
+//     services: ["Branding", "UI/UX Design"],
+//     heroImage: "https://picsum.photos/seed/tech/1200/800",
+//     thumbnail: "https://picsum.photos/seed/tech/800/600",
+//    features: [
+//       { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+//       { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+//       { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+//     ],
+//    gallery: [
+//       'https://picsum.photos/seed/p1/800/600',
+//       'https://picsum.photos/seed/p2/800/1000',
+//       'https://picsum.photos/seed/p3/800/800',
+//       'https://picsum.photos/seed/p4/800/500'
+//     ]
+//   },
+//   {
+//     id: "lumina",
+//     title: "Lumina : Radiant Living",
+//     subtitle: "Luxury Real Estate",
+//     description:
+//       "Capturing the essence of high-end architectural design through cinematic photography and elite web presence.",
+//     client: "Lumina Estates",
+//     industry: "Real Estate",
+//     year: "2023",
+//     services: ["Visual Identity", "Web Design"],
+//     heroImage: "https://picsum.photos/seed/house/1200/800",
+//     thumbnail: "https://picsum.photos/seed/house/800/600",
+//     features: [
+//       { title: 'Biometric Sync', description: 'Seamless integration with Apple Watch and Garmin for real-time heart tracking.' },
+//       { title: 'Adaptive Coaching', description: 'AI-driven workout plans that adjust based on previous performance and soreness.' },
+//       { title: 'Community Hub', description: 'Integrated social layers allowing for live group classes and shared progress.' }
+//     ],
+//     gallery: [
+//       'https://picsum.photos/seed/p1/800/600',
+//       'https://picsum.photos/seed/p2/800/1000',
+//       'https://picsum.photos/seed/p3/800/800',
+//       'https://picsum.photos/seed/p4/800/500'
+//     ]
+//   },
+// ]
+
+// return projects.map((project) => ({
+//     params: { slug: project.id },
+//     props: { project } 
+//   }));
+// }
 
 
 const { project } = Astro.props;
@@ -190,12 +194,12 @@ const { project } = Astro.props;
 
 <Layout
   title={project.title + " - Icone Studio"}
-  description={project.subtitle + " | " + project.description}>
+  description={project.subtitle + " | " + project.overview}>
 <div class="bg-brand-dark min-h-screen text-brand-cream">
       {/* Hero Section */}
       <section class="relative h-[70vh] md:h-[85vh] w-full overflow-hidden">
         <img 
-          src={project.heroImage} 
+          src={urlForImage(project.mainImage!).url()} 
           alt={project.title} 
           class="w-full h-full object-cover opacity-60"
         />
@@ -223,22 +227,22 @@ const { project } = Astro.props;
       {/* Project Meta Grid */}
       <section class="py-12 px-4 md:px-12 max-w-7xl mx-auto border-b border-white/10">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          <div>
+          <!-- <div>
             <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Client</span>
             <span class="text-xl font-display uppercase">{project.client}</span>
-          </div>
+          </div> -->
           <div>
             <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Industry</span>
-            <span class="text-xl font-display uppercase">{project.industry}</span>
+            <span class="text-xl font-display uppercase">{project?.industry}</span>
           </div>
           <div>
             <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Year</span>
-            <span class="text-xl font-display uppercase">{project.year}</span>
+            <span class="text-xl font-display uppercase">{dayjs(project.publishedAt).format("YYYY")}</span>
           </div>
           <div>
             <span class="text-gray-500 font-bold uppercase text-[10px] tracking-widest block mb-1">Services</span>
             <div class="flex flex-wrap gap-2 mt-1">
-              {project.services.map(s => (
+              {project?.services?.map(s => (
                 <span class="bg-white/10 px-2 py-0.5 rounded text-[10px] uppercase font-bold">{s}</span>
               ))}
             </div>
@@ -260,7 +264,7 @@ const { project } = Astro.props;
           <div class="bg-brand-green/30 p-8 md:p-12 rounded-[2rem] border border-white/5 backdrop-blur-sm">
             <h3 class="text-2xl font-display uppercase mb-4 text-white">Our Approach</h3>
             <p class="text-gray-300 leading-relaxed">
-              {project.description}
+              {project?.overview}
             </p>
           </div>
         </div>
@@ -273,7 +277,7 @@ const { project } = Astro.props;
             Key <span class="text-brand-green">Features</span>
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {project.features.map((feature, i) => (
+            {project?.features?.map((feature, i) => (
               <div  class="bg-white p-8 rounded-3xl shadow-sm border border-black/5 hover:shadow-xl transition-shadow duration-300">
                 <div class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center mb-6 font-display text-2xl">
                   0{i + 1}
@@ -294,10 +298,10 @@ const { project } = Astro.props;
           Visual <span class="text-brand-yellow">Gallery</span>
         </h2>
         <div class="columns-1 md:columns-2 gap-8 space-y-8">
-          {project.gallery.map((img, i) => (
+          {project?.gallery?.map((img, i) => (
             <div class="relative group overflow-hidden rounded-[2rem] border border-white/10">
               <img 
-                src={img} 
+                src={urlForImage(img?.asset!).url()} 
                 alt={`Gallery ${i}`} 
                 class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105" 
               />

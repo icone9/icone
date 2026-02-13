@@ -1,83 +1,9 @@
+import dayjs from "dayjs";
+import type { Project } from "../sanity/lib/types";
+import { urlForImage } from "../sanity/lib/url-for-image";
 import { ArrowUpRight } from "./icons";
 
-const MOCK_PROJECTS = {
-  puffilo: {
-    id: "puffilo",
-    title: "Puffilo : Bites of Cloud-Like Bliss",
-    subtitle: "Reimagining Confectionery",
-    description:
-      'Puffilo needed a visual language that spoke to the "cloud-like" texture of their products. We developed a soft-touch packaging system and a pastel-driven color palette that stands out on shelves while evoking immediate sensory comfort.',
-    client: "Puffilo Sweets",
-    industry: "Food & Beverage",
-    year: "2025",
-    services: ["Visual Identity", "Packaging", "Photography"],
-    heroImage:
-      "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&q=80&w=2000",
-    thumbnail: "https://picsum.photos/seed/puffilo/800/600",
-    features: [
-      {
-        title: "Custom Typography",
-        description:
-          "Hand-drawn lettering that mimics the rounded edges of a marshmallow.",
-      },
-      {
-        title: "Sustainable Pack",
-        description:
-          "Fully compostable wrapper materials with premium matte finish.",
-      },
-      {
-        title: "AR Experience",
-        description:
-          'Scan the pack to see the "Cloud World" animations in augmented reality.',
-      },
-    ],
-    gallery: [
-      "https://picsum.photos/seed/p1/800/600",
-      "https://picsum.photos/seed/p2/800/1000",
-      "https://picsum.photos/seed/p3/800/800",
-      "https://picsum.photos/seed/p4/800/500",
-    ],
-  },
-  haven: {
-    id: "haven",
-    title: "Haven: Unleash Your Best Self!",
-    subtitle: "Digital Fitness Revolution",
-    description:
-      "Haven is more than a workout app; it is a mental health and physical fitness sanctuary. We created a UI that feels calming yet motivating, utilizing dark mode aesthetics with neon highlights to keep users focused during intense sessions.",
-    client: "Haven Labs",
-    industry: "Health & Tech",
-    year: "2024",
-    services: ["UI/UX Design", "Branding", "Mobile Dev"],
-    heroImage:
-      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000",
-    thumbnail: "https://picsum.photos/seed/fitness/800/600",
-    features: [
-      {
-        title: "Biometric Sync",
-        description:
-          "Seamless integration with Apple Watch and Garmin for real-time heart tracking.",
-      },
-      {
-        title: "Adaptive Coaching",
-        description:
-          "AI-driven workout plans that adjust based on previous performance and soreness.",
-      },
-      {
-        title: "Community Hub",
-        description:
-          "Integrated social layers allowing for live group classes and shared progress.",
-      },
-    ],
-    gallery: [
-      "https://picsum.photos/seed/h1/800/1200",
-      "https://picsum.photos/seed/h2/800/600",
-      "https://picsum.photos/seed/h3/800/800",
-      "https://picsum.photos/seed/h4/800/900",
-    ],
-  },
-};
-
-const ProjectsSection = () => {
+const ProjectsSection = ({ projects }: { projects: Project[] }) => {
   return (
     <section id="portfolio" className="py-20 px-4 md:px-12 max-w-7xl mx-auto">
       <div className="text-center mb-16">
@@ -93,31 +19,28 @@ const ProjectsSection = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 items-center">
         <div className="order-2 lg:order-1">
           <div className="flex items-center gap-2 text-xs font-bold uppercase text-gray-400 mb-2">
-            <span>Jan 2025</span>
+            <span>{dayjs(projects[0].publishedAt).format("MMM YYYY")}</span>
             <span className="w-1 h-1 bg-brand-yellow rounded-full"></span>
-            <span>Visual Identity</span>
+            <span>{projects[0].industry}</span>
           </div>
           <h3 className="text-4xl md:text-6xl font-display uppercase leading-none mb-6">
-            Puffilo : Bites <br /> of Cloud-Like Bliss
+            {projects[0].title}
           </h3>
-          <p className="text-gray-400 max-w-md mb-8">
-            A playful and vibrant rebranding for a marshmallow confectionery
-            brand, focusing on the sensory experience of softness and flavor.
-          </p>
+          <p className="text-gray-400 max-w-md mb-8">{projects[0].overview}</p>
           <a
-           href={`/projects/${MOCK_PROJECTS.puffilo.id}`}
-            className="flex items-center gap-2 bg-transparent text-brand-yellow border border-brand-yellow/30 hover:border-brand-yellow px-6 py-2 rounded-full uppercase font-bold text-sm transition-colors"
+            href={`/projects/${projects[0].slug.current}`}
+            className="flex items-center gap-2 bg-transparent text-brand-yellow border border-brand-yellow/30 hover:border-brand-yellow px-6 py-2 rounded-full uppercase font-bold text-sm w-fit transition-colors"
           >
             See Project <ArrowUpRight className="w-4 h-4" />
           </a>
         </div>
-        <a 
-        href={`/projects/${MOCK_PROJECTS.puffilo.id}`}
+        <a
+          href={`/projects/${projects[0].slug.current}`}
           className="order-1 lg:order-2 relative group cursor-pointer"
         >
           <div className="absolute inset-0 bg-brand-yellow/10 rounded-[2rem] transform rotate-3 group-hover:rotate-6 transition-transform"></div>
           <img
-            src={MOCK_PROJECTS.puffilo.thumbnail}
+            src={urlForImage(projects[0]?.thumbnail!).url()}
             alt="Puffilo Project"
             className="relative rounded-[2rem] shadow-2xl object-cover h-[400px] border border-white/10"
           />
@@ -137,12 +60,12 @@ const ProjectsSection = () => {
       {/* Secondary Large Project 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 items-center">
         <a
-          href={`/projects/${MOCK_PROJECTS.haven.id}`}
+          href={`/projects/${projects[1].slug.current}`}
           className="relative group cursor-pointer"
         >
           <div className="absolute inset-0 bg-brand-green rounded-[2rem] transform -rotate-2 group-hover:-rotate-4 transition-transform border border-white/10"></div>
           <img
-            src={MOCK_PROJECTS.haven.thumbnail}
+            src={urlForImage(projects[1]?.thumbnail!).url()}
             alt="Haven Project"
             className="relative rounded-[2rem] shadow-2xl object-cover h-[400px]"
           />
@@ -156,20 +79,17 @@ const ProjectsSection = () => {
         </a>
         <div className="pl-0 lg:pl-10">
           <div className="flex items-center gap-2 text-xs font-bold uppercase text-gray-400 mb-2">
-            <span>Nov 2024</span>
+            <span>{dayjs(projects[1].publishedAt).format("MMM YYYY")}</span>
             <span className="w-1 h-1 bg-brand-yellow rounded-full"></span>
-            <span>Branding</span>
+            <span>{projects[1].industry}</span>
           </div>
           <h3 className="text-4xl md:text-6xl font-display uppercase leading-none mb-6">
-            Haven: Unleash <br /> Your Best Self!
+            {projects[1].title}
           </h3>
-          <p className="text-gray-400 max-w-md mb-8">
-            Comprehensive branding for a new-age fitness app, combining
-            energetic visuals with a community-driven tone of voice.
-          </p>
+          <p className="text-gray-400 max-w-md mb-8">{projects[1].overview}</p>
           <a
-            href={`/projects/${MOCK_PROJECTS.haven.id}`}
-            className="flex items-center gap-2 bg-transparent text-brand-yellow border border-brand-yellow/30 hover:border-brand-yellow px-6 py-2 rounded-full uppercase font-bold text-sm transition-colors"
+            href={`/projects/${projects[1].slug.current}`}
+            className="flex items-center gap-2 w-fit bg-transparent text-brand-yellow border border-brand-yellow/30 hover:border-brand-yellow px-6 py-2 rounded-full uppercase font-bold text-sm transition-colors"
           >
             See Project <ArrowUpRight className="w-4 h-4" />
           </a>
@@ -178,50 +98,28 @@ const ProjectsSection = () => {
 
       {/* List View */}
       <div className="space-y-6">
-        {[
-          {
-            id: "lumina",
-            name: "Hoptonic Tea",
-            date: "Nov 2024",
-            type: "Web Design",
-            img: "https://picsum.photos/seed/tea/200/100",
-          },
-          {
-            id: "caca-family",
-            name: "Caca Family",
-            date: "Oct 2024",
-            type: "Web Design",
-            img: "https://picsum.photos/seed/family/200/100",
-          },
-          {
-            id: "edify",
-            name: "Edify",
-            date: "Sept 2024",
-            type: "Branding",
-            img: "https://picsum.photos/seed/tech/200/100",
-          },
-        ].map((item, i) => (
+        {projects.slice(2).map((item, i) => (
           <a
-            href={`/projects/${item.id}`}
+            href={`/projects/${item.slug.current}`}
             key={i}
             className="group flex flex-col md:flex-row items-center justify-between border-t border-white/10 py-6 hover:bg-white/5 transition-colors px-4 rounded-xl cursor-pointer"
           >
             <h4 className="text-2xl md:text-4xl font-display uppercase text-white w-full md:w-1/3">
-              {item.name}
+              {item.title}
             </h4>
             <div className="flex items-center justify-between w-full md:w-2/3 mt-4 md:mt-0">
               <span className="text-sm font-bold text-gray-400 uppercase">
-                {item.date}
+                {dayjs(item.publishedAt).format("MMM YYYY")}
               </span>
               <span className="text-sm font-bold text-gray-400 uppercase">
-                {item.type}
+                {item.industry}
               </span>
 
               {/* Hover Preview Image */}
               <div className="hidden md:block w-32 h-20 rounded-lg overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-4 group-hover:translate-x-0 duration-300">
                 <img
-                  src={item.img}
-                  alt={item.name}
+                  src={urlForImage(item?.thumbnail!).url()}
+                  alt={item.title}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -231,7 +129,8 @@ const ProjectsSection = () => {
       </div>
 
       <div className="mt-16 text-center">
-        <a href="/projects"
+        <a
+          href="/projects"
           className="bg-brand-yellow text-brand-dark px-8 py-3 rounded-full font-bold uppercase text-sm hover:scale-105 transition-transform"
         >
           Discover More
