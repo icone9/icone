@@ -4,25 +4,23 @@ import Layout from '../../layout/index.astro';
 
 
 export async function getStaticPaths() {
+  // When using Sanity, use this query and map post + urlForImage for mainImage:
   // const { data: posts } = await loadQuery<Post[]>({
   //   query: `*[_type == "post"]{
-  //     slug,
+  //     "slug": slug.current,
   //     title,
   //     overview,
   //     body,
   //     mainImage,
-  //     categories[]->{ title },
-  //     author->{
-  //       name,
-  //       role,
-  //       image
-  //     },
+  //     category,
+  //     readTime,
   //     publishedAt,
+  //     author->{ name, role, image }
   //   }`,
   // });
   // return posts.map((post) => ({
-  //   params: { post: post.slug.current },
-  //   props: { post} 
+  //   params: { post: post.slug },
+  //   props: { post },
   // }));
   return [
   {

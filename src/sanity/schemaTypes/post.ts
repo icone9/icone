@@ -24,14 +24,25 @@ export const postType = defineType({
     defineField({
       name: "mainImage",
       type: "image",
+      title: "Hero image",
       options: {
         hotspot: true,
       },
     }),
     defineField({
-      name: "categories",
-      type: "array",
-      of: [{ type: "reference", to: { type: "category" } }],
+      name: "category",
+      type: "string",
+      title: "Category",
+      description: "Used for filters and display (e.g. Design, Technology, Strategy)",
+      options: {
+        list: [
+          { title: "Design", value: "Design" },
+          { title: "Strategy", value: "Strategy" },
+          { title: "Technology", value: "Technology" },
+          { title: "Insights", value: "Insights" },
+        ],
+        layout: "dropdown",
+      },
     }),
     defineField({
       name: "publishedAt",
@@ -40,22 +51,35 @@ export const postType = defineType({
     defineField({
       name: "overview",
       type: "text",
+      title: "Excerpt",
+      description: "Short summary used in list cards and as hero pull quote",
+    }),
+    defineField({
+      name: "readTime",
+      type: "number",
+      title: "Read time (minutes)",
+      description: "Estimated reading time in minutes (e.g. 6 for '6 min read')",
     }),
     defineField({
       name: "body",
       type: "blockContent",
+      title: "Body",
     }),
   ],
 
   preview: {
     select: {
       title: "title",
+      category: "category",
       author: "author.name",
       media: "mainImage",
     },
     prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
+      const { author, category } = selection;
+      return {
+        ...selection,
+        subtitle: [author && `by ${author}`, category].filter(Boolean).join(" • "),
+      };
     },
   },
 });

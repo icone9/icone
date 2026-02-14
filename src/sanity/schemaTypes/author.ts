@@ -9,6 +9,12 @@ export const authorType = defineType({
       type: "string",
     }),
     defineField({
+      name: "role",
+      type: "string",
+      title: "Role",
+      description: "e.g. Design Director, Tech Lead, UX Strategist",
+    }),
+    defineField({
       name: "slug",
       type: "slug",
       options: {
