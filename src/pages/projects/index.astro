@@ -1,10 +1,30 @@
 ---
 import Layout from '../../layout/index.astro';
 import ProjectList from '../../components/ProjectList';
+import type { Project } from '../../sanity/lib/types';
+import { loadQuery } from '../../sanity/lib/load-query';
+
+const { data: projects } = await loadQuery<Project[]>({
+    query: `*[_type == "project"] | order(publishedAt desc){
+      title,
+      subtitle,
+      slug,
+      overview,
+      client,
+      industry,
+      services[],
+      mainImage,
+      thumbnail,
+      status,
+      publishedAt,
+    }`,
+  });
+
+  
 ---
 
 <Layout
   title={"Projects - Icone Studio"}
   description={"Our latest projects and case studies"}>
-  <ProjectList client:load/>
+  <ProjectList projects={projects} client:load/>
 </Layout>
