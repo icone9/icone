@@ -5,13 +5,15 @@ import { loadQuery } from '../../sanity/lib/load-query';
 import type { Post } from '../../sanity/lib/types';
 
 const { data: posts } = await loadQuery<Post[]>({
-    query: `*[_type == "post"][0..3] | order(_createdAt asc){
+    query: `*[_type == "post"] | order(publishedAt desc){
       title,
-      slug,
+      "slug": slug.current,
       mainImage,
       overview,
-      categories[]->{ title},
+      category,
+      readTime,
       publishedAt,
+      author->{ name, role, image }
     }`,
   });
 

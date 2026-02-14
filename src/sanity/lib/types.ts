@@ -2,13 +2,14 @@ import type { SanityAsset } from "@sanity/image-url/lib/types/types";
 
 export type Post = {
   title: string;
-  slug: { current: string };
-  mainImage: { asset: SanityAsset };
+  slug: string | { current: string };
+  mainImage?: { asset: SanityAsset };
   overview: string;
-  body: any; // Use a more specific type if available, e.g., PortableTextBlock[]
-  author: { name: string; role: string; image: SanityAsset };
-  categories: { title: string }[];
-  publishedAt: string;
+  body?: any; // PortableTextBlock[]
+  author?: { name: string; role?: string; image?: SanityAsset };
+  category?: string;
+  readTime?: number;
+  publishedAt?: string;
 };
 
 export type ProjectFeature = {

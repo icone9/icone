@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "./icons";
+import type { Project } from "../sanity/lib/types";
+import { urlForImage } from "../sanity/lib/url-for-image";
+import type { SanityAsset } from "@sanity/image-url/lib/types/types";
+import dayjs from "dayjs";
 
 const ALL_MOCK_PROJECTS = [
   {
@@ -96,15 +100,9 @@ const ALL_MOCK_PROJECTS = [
   },
 ];
 
-const ProjectList = () => {
+const ProjectList = ({ projects }: { projects: Project[] }) => {
   const [filter, setFilter] = useState("All");
-  const categories = [
-    "All",
-    "Visual Identity",
-    "Branding",
-    "Web Design",
-    "UI/UX Design",
-  ];
+  const categories = ["All", ...projects.map((p) => p.industry)];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -112,8 +110,8 @@ const ProjectList = () => {
 
   const filteredProjects =
     filter === "All"
-      ? ALL_MOCK_PROJECTS
-      : ALL_MOCK_PROJECTS.filter((p) => p.services.some((s) => s === filter));
+      ? projects
+      : projects.filter((p) => p.services?.some((s) => s === filter));
 
   return (
     <div className="bg-brand-dark min-h-screen pt-32 pb-20 px-4 md:px-12">
@@ -145,7 +143,7 @@ const ProjectList = () => {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setFilter(cat)}
+              onClick={() => setFilter(cat || "")}
               className={`px-6 py-2 rounded-full uppercase font-bold text-[10px] md:text-xs transition-all tracking-wider ${
                 filter === cat
                   ? "bg-brand-yellow text-brand-dark"
@@ -161,14 +159,14 @@ const ProjectList = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
           {filteredProjects.map((project) => (
             <a
-              href={`/projects/${project.id}`}
-              key={project.id}
+              href={`/projects/${project.slug.current}`}
+              key={project.slug.current}
               className="group cursor-pointer"
             >
               <div className="relative overflow-hidden rounded-[2.5rem] aspect-[4/3] mb-6">
                 <img
-                  src={project.thumbnail}
-                  alt={project.title}
+                  src={urlForImage(project.thumbnail?.asset as SanityAsset).format("webp").fit("fill").url()}
+                  alt={project.title || ""}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors duration-500"></div>
@@ -184,7 +182,7 @@ const ProjectList = () => {
                     {project.title}
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {project.services.map((s) => (
+                    {project.services?.map((s) => (
                       <span
                         key={s}
                         className="text-[10px] uppercase font-bold text-gray-500"
@@ -195,7 +193,7 @@ const ProjectList = () => {
                   </div>
                 </div>
                 <span className="text-xs font-bold text-brand-yellow">
-                  {project.year}
+                  {dayjs(project.publishedAt).format("MMM YYYY")}
                 </span>
               </div>
             </a>

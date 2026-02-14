@@ -4,6 +4,9 @@ import { urlForImage } from "../sanity/lib/url-for-image";
 import { ArrowUpRight } from "./icons";
 
 const ProjectsSection = ({ projects }: { projects: Project[] }) => {
+  const avygaProjects = projects.filter((project) => project.title.toLowerCase().includes("avyga"))[0];
+  const kmarketsProjects = projects.filter((project) => project.title.toLowerCase().includes("kmarkets"))[0];
+  const otherProjects = projects.filter((project) => !project.title.toLowerCase().includes("avyga") && !project.title.toLowerCase().includes("kmarkets"));
   return (
     <section id="portfolio" className="py-20 px-4 md:px-12 max-w-7xl mx-auto">
       <div className="text-center mb-16">
@@ -19,39 +22,39 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 items-center">
         <div className="order-2 lg:order-1">
           <div className="flex items-center gap-2 text-xs font-bold uppercase text-gray-400 mb-2">
-            <span>{dayjs(projects[0].publishedAt).format("MMM YYYY")}</span>
+            <span>{dayjs(kmarketsProjects.publishedAt).format("MMM YYYY")}</span>
             <span className="w-1 h-1 bg-brand-yellow rounded-full"></span>
-            <span>{projects[0].industry}</span>
+            <span>{kmarketsProjects.industry}</span>
           </div>
           <h3 className="text-4xl md:text-6xl font-display uppercase leading-none mb-6">
-            {projects[0].title}
+            {kmarketsProjects.title}
           </h3>
-          <p className="text-gray-400 max-w-md mb-8">{projects[0].overview}</p>
+          <p className="text-gray-400 max-w-md mb-8">{kmarketsProjects.overview}</p>
           <a
-            href={`/projects/${projects[0].slug.current}`}
+            href={`/projects/${kmarketsProjects.slug.current}`}
             className="flex items-center gap-2 bg-transparent text-brand-yellow border border-brand-yellow/30 hover:border-brand-yellow px-6 py-2 rounded-full uppercase font-bold text-sm w-fit transition-colors"
           >
             See Project <ArrowUpRight className="w-4 h-4" />
           </a>
         </div>
         <a
-          href={`/projects/${projects[0].slug.current}`}
+          href={`/projects/${kmarketsProjects.slug.current}`}
           className="order-1 lg:order-2 relative group cursor-pointer"
         >
           <div className="absolute inset-0 bg-brand-yellow/10 rounded-[2rem] transform rotate-3 group-hover:rotate-6 transition-transform"></div>
           <img
-            src={urlForImage(projects[0]?.thumbnail!).url()}
+            src={urlForImage(kmarketsProjects?.thumbnail!).url()}
             alt="Puffilo Project"
             className="relative rounded-[2rem] shadow-2xl object-cover h-[400px] border border-white/10"
           />
           <img
-            src="https://picsum.photos/seed/sweet1/100/100"
-            className="absolute -bottom-6 -left-6 w-24 h-24 rounded-xl border-4 border-brand-dark shadow-xl"
+            src="https://images.unsplash.com/photo-1582902281043-69c645f40cd5?q=80&w=100&h=100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            className="absolute -bottom-6 -left-6 w-24 h-24 rounded-xl border-4 object-cover border-brand-dark shadow-xl"
             alt="detail"
           />
           <img
-            src="https://picsum.photos/seed/sweet2/100/100"
-            className="absolute -top-6 -right-6 w-20 h-20 rounded-full border-4 border-brand-dark shadow-xl animate-pulse"
+            src="https://images.unsplash.com/photo-1581345796539-ac17c5668cc3?q=80&w=100&h=100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            className="absolute -top-6 -right-6 w-20 h-20 rounded-full border-4 object-cover border-brand-dark shadow-xl animate-pulse"
             alt="detail"
           />
         </a>
@@ -60,35 +63,35 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
       {/* Secondary Large Project 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 items-center">
         <a
-          href={`/projects/${projects[1].slug.current}`}
+          href={`/projects/${avygaProjects.slug.current}`}
           className="relative group cursor-pointer"
         >
           <div className="absolute inset-0 bg-brand-green rounded-[2rem] transform -rotate-2 group-hover:-rotate-4 transition-transform border border-white/10"></div>
           <img
-            src={urlForImage(projects[1]?.thumbnail!).url()}
+            src={urlForImage(avygaProjects?.thumbnail!).url()}
             alt="Haven Project"
             className="relative rounded-[2rem] shadow-2xl object-cover h-[400px]"
           />
-          <div className="absolute bottom-4 right-4 bg-brand-cream/90 p-4 rounded-xl shadow-lg max-w-[150px]">
+          <div className="absolute bottom-4 right-4 bg-brand-cream/90 p-1 rounded-xl shadow-lg max-w-[150px]">
             <img
-              src="https://picsum.photos/seed/app/100/100"
-              className="w-full h-auto rounded-md mb-2"
+              src="https://images.unsplash.com/photo-1517263904808-5dc91e3e7044?q=80&w=100&h=80&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="w-full h-auto rounded-md  object-cover"
               alt="app icon"
             />
           </div>
         </a>
         <div className="pl-0 lg:pl-10">
           <div className="flex items-center gap-2 text-xs font-bold uppercase text-gray-400 mb-2">
-            <span>{dayjs(projects[1].publishedAt).format("MMM YYYY")}</span>
+              <span>{dayjs(avygaProjects.publishedAt).format("MMM YYYY")}</span>
             <span className="w-1 h-1 bg-brand-yellow rounded-full"></span>
-            <span>{projects[1].industry}</span>
+            <span>{avygaProjects.industry}</span>
           </div>
           <h3 className="text-4xl md:text-6xl font-display uppercase leading-none mb-6">
-            {projects[1].title}
+            {avygaProjects.title}
           </h3>
-          <p className="text-gray-400 max-w-md mb-8">{projects[1].overview}</p>
+          <p className="text-gray-400 max-w-md mb-8">{avygaProjects.overview}</p>
           <a
-            href={`/projects/${projects[1].slug.current}`}
+            href={`/projects/${avygaProjects.slug.current}`}
             className="flex items-center gap-2 w-fit bg-transparent text-brand-yellow border border-brand-yellow/30 hover:border-brand-yellow px-6 py-2 rounded-full uppercase font-bold text-sm transition-colors"
           >
             See Project <ArrowUpRight className="w-4 h-4" />
@@ -98,7 +101,7 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
 
       {/* List View */}
       <div className="space-y-6">
-        {projects.slice(2).map((item, i) => (
+        {otherProjects.map((item, i) => (
           <a
             href={`/projects/${item.slug.current}`}
             key={i}
